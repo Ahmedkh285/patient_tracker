@@ -1,6 +1,10 @@
 import 'dart:ffi';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+
+import '../firebase_helper/fireBaseHelper.dart';
+import 'ad_doctors.dart';
 
 class AdHome extends StatefulWidget {
   AdHome({Key? key}) : super(key: key);
@@ -59,55 +63,95 @@ class _AdHomeState extends State<AdHome> {
           ),
         ),
         backgroundColor: Colors.transparent,
-        body: Stack(
-          children: [
-            Container(
-              padding: EdgeInsets.only(left: 35, top: 80),
-              child: Text(
-                'Hello admin!',
-                style: TextStyle(color: Colors.white, fontSize: 33),
-              ),
+        body: Column(
+           children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  padding: EdgeInsets.only(left: 35, top: 80),
+                  child: Text(
+                    'Hello admin!',
+                    style: TextStyle(color: Colors.white, fontSize: 33),
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.only(left: 35),
+                  child: Text(
+                    'Next doctors are waiting                                  for verification.',
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  ),
+                ),
+              ],
             ),
-            Container(
-              padding: EdgeInsets.only(left: 35, top: 130),
-              child: Text(
-                'Next doctors are waiting                                  for verification.',
-                style: TextStyle(color: Colors.white, fontSize: 20),
-              ),
-            ),
-            Center(
-              child: Column(
-                children: <Widget>[
-                  Padding(padding: EdgeInsets.only(top: 200)),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.transparent,
-                      padding: const EdgeInsets.all(16.0),
-                    ),
-                    onPressed: () {
-                      Navigator.pushNamed(context, 'ad_doctors');
+
+           StreamBuilder(
+        stream:FireBaseHelper().getDoctors(context),
+        builder:(BuildContext context,
+            AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.hasError) {
+            return const Text('Something went wrong try again');
+          }
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          return snapshot.data!.size == 0?
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              Center(child: Text('No doctors')),
+            ],
+          ):
+          ListView.builder(
+              reverse: true,
+              shrinkWrap: true ,
+              itemCount: snapshot.data!.docs.length,
+              itemBuilder: (context, index) {
+
+                  return InkWell(
+                    onTap: (){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => AdDoctors(snapshot.data!.docs[index])),
+                      );
+
                     },
-                    child: Text(
-                      "                     doctors                    ",
-                      style: TextStyle(
-                        decoration: TextDecoration.none,
-                        fontSize: 25,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                  Row(
-                    children: [
-                      Container(
-                        width: 411,
-                        height: 210,
-                        color: Colors.transparent,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
+                    child:Padding(
+                      padding: EdgeInsets.all(16.0),
+                      child:Card(
+                        child: Padding(
+                          padding: EdgeInsets.all(16.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                snapshot.data!.docs[index]['name'],
+                                style: TextStyle(
+                                  fontSize: 20.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(height: 10.0),
+                              Text(
+                                snapshot.data!.docs[index]['spec'],
+                                style: TextStyle(
+                                  fontSize: 16.0,
+                                  color: Colors.grey[600],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      )
+                    )
+                  );
+
+              });
+        },
+      )
           ],
         ),
       ),

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../Utils.dart';
+import '../firebase_helper/fireBaseHelper.dart';
+
 class AdLogin extends StatefulWidget {
   AdLogin({Key? key}) : super(key: key);
 
@@ -8,6 +11,10 @@ class AdLogin extends StatefulWidget {
 }
 
 class _AdLoginState extends State<AdLogin> {
+  var email = "";
+  var password = "";
+  late BuildContext dialogContext;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -37,6 +44,9 @@ class _AdLoginState extends State<AdLogin> {
                 child: Column(
                   children: [
                     TextField(
+                      onChanged: (val) {
+                        email = val;
+                      },
                       decoration: InputDecoration(
                         fillColor: Colors.grey[100],
                         filled: true,
@@ -50,6 +60,9 @@ class _AdLoginState extends State<AdLogin> {
                       height: 30,
                     ),
                     TextField(
+                      onChanged: (val) {
+                        password = val;
+                      },
                       obscureText: true,
                       decoration: InputDecoration(
                         fillColor: Colors.grey[100],
@@ -79,7 +92,37 @@ class _AdLoginState extends State<AdLogin> {
                           child: IconButton(
                             color: Colors.white,
                             onPressed: () {
-                              Navigator.pushNamed(context, 'ad_home');
+                              if (email.isEmpty || password.isEmpty) {
+                                buildShowSnackBar(
+                                    context, "please check your info.");
+                              } else {
+                                showDialog(
+                                    context: context,
+                                    barrierDismissible: false,
+                                    builder: (context) {
+                                      dialogContext = context;
+                                      return const Center(
+                                        child: CircularProgressIndicator(),
+                                      );
+                                    });
+                                FireBaseHelper()
+                                    .signIn(
+                                        email: email.trim().toString(),
+                                        password: password.trim().toString())
+                                    .then((result) async {
+                                  if (result == "Welcome") {
+                                    Navigator.pushNamed(context, 'ad_home');
+                                  } else if (result != null) {
+                                    buildShowSnackBar(context, result);
+                                    Navigator.pop(dialogContext);
+                                  } else {
+                                    Navigator.pop(dialogContext);
+                                    buildShowSnackBar(context, "Try again.");
+                                  }
+                                }).catchError((e) {
+                                  Navigator.pop(dialogContext);
+                                });
+                              }
                             },
                             icon: Icon(
                               Icons.arrow_forward,

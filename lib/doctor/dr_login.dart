@@ -1,4 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../Utils.dart';
+import '../firebase_helper/fireBaseHelper.dart';
+import '../provider/my_provider.dart';
+import 'dr_home.dart';
 
 class DrLogin extends StatefulWidget {
   DrLogin({Key? key}) : super(key: key);
@@ -8,7 +15,11 @@ class DrLogin extends StatefulWidget {
 }
 
 class _DrLoginState extends State<DrLogin> {
-  @override
+  var email = "";
+  var password = "";
+  late BuildContext dialogContext;
+
+   @override
   Widget build(BuildContext context) {
     return Container(
       constraints: BoxConstraints.expand(),
@@ -37,6 +48,9 @@ class _DrLoginState extends State<DrLogin> {
                 child: Column(
                   children: [
                     TextField(
+                      onChanged: (val){
+                        email = val;
+                      },
                       decoration: InputDecoration(
                         fillColor: Colors.grey[100],
                         filled: true,
@@ -50,6 +64,9 @@ class _DrLoginState extends State<DrLogin> {
                       height: 30,
                     ),
                     TextField(
+                      onChanged: (val){
+                        password = val;
+                      },
                       obscureText: true,
                       decoration: InputDecoration(
                         fillColor: Colors.grey[100],
@@ -79,7 +96,61 @@ class _DrLoginState extends State<DrLogin> {
                           child: IconButton(
                             color: Colors.white,
                             onPressed: () {
-                              Navigator.pushNamed(context, 'dr_home');
+                              if(email.isEmpty || password.isEmpty ){
+                                buildShowSnackBar(context, "please check your info.");
+                              }else {
+                                showDialog(
+                                    context: context,
+                                    barrierDismissible: false,
+                                    builder: (context) {
+                                      dialogContext = context;
+                                      return const Center(
+                                        child: CircularProgressIndicator(),
+                                      );
+                                    }
+                                );
+                                FireBaseHelper()
+                                    .signIn(email: email.trim().toString(), password: password.trim().toString())
+                                    .then((result) async {
+
+                                  if(result == "Welcome"){
+                                    var collection = FirebaseFirestore.instance.collection('doctors');
+                                    var docSnapshot = await collection.doc(Provider.of<MyProvider>(context,listen: false).auth.currentUser!.uid).get();
+                                    if (docSnapshot.exists) {
+                                      Map<String, dynamic> data = docSnapshot.data()!;
+
+                                      data.forEach((key, value) {
+                                        if(key.contains("verified")) {
+                                          print("bego012${value}");
+                                          if (value == "1") {
+                                            Navigator.pop(dialogContext);
+
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(builder: (context) => DrHome()),
+                                            );
+                                          } else {
+                                            Navigator.pop(dialogContext);
+
+                                            buildShowSnackBar(context,
+                                                "admin review your account");
+                                          }
+                                        }
+                                      });
+                                    }
+
+                                  } else if (result != null) {
+                                    buildShowSnackBar(context, result);
+                                    Navigator.pop(dialogContext);
+                                  }
+                                  else {
+                                    Navigator.pop(dialogContext);
+                                    buildShowSnackBar(context, "Try again.");
+                                  }
+                                }).catchError((e) {
+                                  Navigator.pop(dialogContext);
+                                });
+                              }
                             },
                             icon: Icon(
                               Icons.arrow_forward,

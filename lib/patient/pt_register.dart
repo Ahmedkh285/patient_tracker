@@ -1,4 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../Utils.dart';
+import '../firebase_helper/fireBaseHelper.dart';
+import '../provider/my_provider.dart';
 
 class CheckboxExample extends StatefulWidget {
   const CheckboxExample({super.key});
@@ -45,7 +51,11 @@ class PtRegister extends StatefulWidget {
 }
 
 class _PtRegisterState extends State<PtRegister> {
-  @override
+   var name = "";
+  var email = "";
+  var password = "";
+  late BuildContext dialogContext;
+   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
@@ -62,24 +72,7 @@ class _PtRegisterState extends State<PtRegister> {
         backgroundColor: Colors.transparent,
         body: Stack(
           children: [
-            Container(
-              padding: EdgeInsets.only(left: 25, top: 420),
-              child: CheckboxExample(),
-            ),
-            Container(
-              padding: EdgeInsets.only(left: 70, top: 435),
-              child: Text(
-                'i am following up with a doctor using this app',
-                style: TextStyle(color: Colors.white, fontSize: 15),
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.only(left: 35, top: 100),
-              child: Text(
-                'Create\nAccount',
-                style: TextStyle(color: Colors.white, fontSize: 33),
-              ),
-            ),
+
             SingleChildScrollView(
               child: Container(
                 padding: EdgeInsets.only(
@@ -88,8 +81,12 @@ class _PtRegisterState extends State<PtRegister> {
                   right: 35,
                 ),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TextField(
+                      onChanged: (val){
+                        name = val;
+                      },
                       decoration: InputDecoration(
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
@@ -110,6 +107,9 @@ class _PtRegisterState extends State<PtRegister> {
                       height: 30,
                     ),
                     TextField(
+                      onChanged: (val){
+                        email = val;
+                      },
                       decoration: InputDecoration(
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
@@ -130,6 +130,9 @@ class _PtRegisterState extends State<PtRegister> {
                       height: 30,
                     ),
                     TextField(
+                      onChanged: (val){
+                        password = val;
+                      },
                       obscureText: true,
                       decoration: InputDecoration(
                         focusedBorder: OutlineInputBorder(
@@ -154,7 +157,7 @@ class _PtRegisterState extends State<PtRegister> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Sing In',
+                          'Sing Up',
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 27,
@@ -165,7 +168,50 @@ class _PtRegisterState extends State<PtRegister> {
                           backgroundColor: Color(0xff4c505b),
                           child: IconButton(
                             color: Colors.white,
-                            onPressed: () {},
+                            onPressed: () {
+                              if(email.isEmpty || password.isEmpty || name.isEmpty){
+                                buildShowSnackBar(context, "please check your info.");
+                              }else{
+                                showDialog(
+                                    context: context,
+                                    barrierDismissible: false,
+                                    builder: (context) {
+                                      dialogContext = context;
+                                      return const Center(
+                                        child: CircularProgressIndicator(),
+                                      );
+                                    }
+                                );
+                                FireBaseHelper()
+                                    .signUp(email: email.trim().toString(), password: password.trim().toString())
+                                    .then((result) {
+                                  if(result == "true"){
+                                    Navigator.pushNamed(context, 'pt_login');
+                                    Provider.of<MyProvider>(context,listen: false).auth.currentUser!.updateDisplayName(name.trim().toString());
+                                    FireBaseHelper().addPatient(
+                                        Provider.of<MyProvider>(context,listen: false).auth.currentUser!.uid,
+                                        name,
+                                        email,
+                                        "0",
+                                    );
+                                    buildShowSnackBar(context, "Now You Can Login");
+
+                                  } else if (result != null) {
+                                    buildShowSnackBar(context, result);
+                                    Navigator.pop(dialogContext);
+                                  }
+                                  else {
+                                    Navigator.pop(dialogContext);
+                                    buildShowSnackBar(context, "Try again.");
+                                  }
+                                }).catchError((e) {
+                                  Navigator.pop(dialogContext);
+                                  buildShowSnackBar(context, e.toString());
+                                });
+                              }
+
+                            },
+
                             icon: Icon(
                               Icons.arrow_forward,
                             ),

@@ -1,4 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:provider/provider.dart';
+
+import '../Utils.dart';
+import '../firebase_helper/fireBaseHelper.dart';
+import '../provider/my_provider.dart';
 
 class DrRegister extends StatefulWidget {
   const DrRegister({Key? key}) : super(key: key);
@@ -8,10 +17,18 @@ class DrRegister extends StatefulWidget {
 }
 
 class _DrRegisterState extends State<DrRegister> {
+  final ImagePicker _picker = ImagePicker();
+  var name = "";
+  var spec = "";
+  var email = "";
+  var password = "";
+  var cardUrl = "";
+  late BuildContext dialogContext;
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         image: DecorationImage(
           image: AssetImage('assets/images/black2.jpg'),
           fit: BoxFit.cover,
@@ -26,8 +43,8 @@ class _DrRegisterState extends State<DrRegister> {
         body: Stack(
           children: [
             Container(
-              padding: EdgeInsets.only(left: 35, top: 10),
-              child: Text(
+              padding: const EdgeInsets.only(left: 35, top: 10),
+              child: const Text(
                 'Create\nAccount',
                 style: TextStyle(color: Colors.white, fontSize: 33),
               ),
@@ -42,90 +59,134 @@ class _DrRegisterState extends State<DrRegister> {
                 child: Column(
                   children: [
                     TextField(
+                      onChanged: (val){
+                        name = val;
+                      },
                       decoration: InputDecoration(
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.black),
+                          borderSide: const BorderSide(color: Colors.black),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.white),
+                          borderSide: const BorderSide(color: Colors.white),
                         ),
                         hintText: "Name",
-                        hintStyle: TextStyle(color: Colors.white),
+                        hintStyle: const TextStyle(color: Colors.white),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 30,
                     ),
                     TextField(
+                      onChanged: (val){
+                        spec = val;
+                      },
                       decoration: InputDecoration(
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.black),
+                          borderSide: const BorderSide(color: Colors.black),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.white),
+                          borderSide: const BorderSide(color: Colors.white),
                         ),
                         hintText: "Specialization",
-                        hintStyle: TextStyle(color: Colors.white),
+                        hintStyle: const TextStyle(color: Colors.white),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 30,
                     ),
                     TextField(
+                      onChanged: (val){
+                        email = val;
+                      },
                       decoration: InputDecoration(
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.black),
+                          borderSide: const BorderSide(color: Colors.black),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.white),
+                          borderSide: const BorderSide(color: Colors.white),
                         ),
                         hintText: "Email",
-                        hintStyle: TextStyle(color: Colors.white),
+                        hintStyle: const TextStyle(color: Colors.white),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 30,
                     ),
                     TextField(
+                        onChanged: (val){
+                          password = val;
+                        },
                       obscureText: true,
                       decoration: InputDecoration(
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.black),
+                          borderSide: const BorderSide(color: Colors.black),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.white),
+                          borderSide: const BorderSide(color: Colors.white),
                         ),
                         hintText: "Password",
-                        hintStyle: TextStyle(color: Colors.white),
+                        hintStyle: const TextStyle(color: Colors.white),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
                       ),
                     ),
-                    SizedBox(
-                      height: 40,
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Column(
+                      //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          'Upload Your Card',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w700),
+                        ),
+                        InkWell(
+                          onTap: ()async {
+                            final status = await Permission.storage.request();
+                            if(status == PermissionStatus.granted) {
+                              final XFile? photo = await _picker.pickImage(source: ImageSource.camera);
+                              UploadTask uploadTask = FireBaseHelper().getRefFromStorageForUploadImages(photo, "", context);
+                              uploadFile("", "image", uploadTask, context);
+                            }else{
+                              await Permission.storage.request();
+                            }
+
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: SizedBox(
+                              width: 100,
+                                child: cardUrl.isEmpty?Image.asset('assets/images/card.png'):Image.network(cardUrl)),
+                          ),
+                        ),
+
+                      ],
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'Sing In',
                           style: TextStyle(
                               color: Colors.white,
@@ -134,20 +195,63 @@ class _DrRegisterState extends State<DrRegister> {
                         ),
                         CircleAvatar(
                           radius: 30,
-                          backgroundColor: Color(0xff4c505b),
+                          backgroundColor: const Color(0xff4c505b),
                           child: IconButton(
                             color: Colors.white,
                             onPressed: () {
-                              Navigator.pushNamed(context, 'dr_home');
+                              if(email.isEmpty || password.isEmpty || name.isEmpty || spec.isEmpty){
+                                buildShowSnackBar(context, "please check your info.");
+                              }else  if(cardUrl.isEmpty){
+                                buildShowSnackBar(context, "please upload your card.");
+                              }else{
+                                showDialog(
+                                    context: context,
+                                    barrierDismissible: false,
+                                    builder: (context) {
+                                      dialogContext = context;
+                                      return const Center(
+                                        child: CircularProgressIndicator(),
+                                      );
+                                    }
+                                );
+                                FireBaseHelper()
+                                    .signUp(email: email.trim().toString(), password: password.trim().toString())
+                                    .then((result) {
+                                  if(result == "true"){
+                                    Navigator.pushNamed(context, 'dr_login');
+                                    Provider.of<MyProvider>(context,listen: false).auth.currentUser!.updateDisplayName(name.trim().toString());
+                                    FireBaseHelper().addDoctor(
+                                        Provider.of<MyProvider>(context,listen: false).auth.currentUser!.uid,
+                                        name,
+                                        email,
+                                        spec,
+                                        cardUrl
+                                        );
+                                    buildShowSnackBar(context, "admin review your account");
+
+                                  } else if (result != null) {
+                                    buildShowSnackBar(context, result);
+                                    Navigator.pop(dialogContext);
+                                  }
+                                  else {
+                                    Navigator.pop(dialogContext);
+                                    buildShowSnackBar(context, "Try again.");
+                                  }
+                                }).catchError((e) {
+                                  Navigator.pop(dialogContext);
+                                  buildShowSnackBar(context, e.toString());
+                                });
+                              }
+
                             },
-                            icon: Icon(
+                            icon: const Icon(
                               Icons.arrow_forward,
                             ),
                           ),
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 40,
                     ),
                     Row(
@@ -157,7 +261,7 @@ class _DrRegisterState extends State<DrRegister> {
                           onPressed: () {
                             Navigator.pushNamed(context, 'dr_login');
                           },
-                          child: Text(
+                          child: const Text(
                             "I have an account",
                             style: TextStyle(
                               decoration: TextDecoration.underline,
@@ -176,5 +280,30 @@ class _DrRegisterState extends State<DrRegister> {
         ),
       ),
     );
+  }
+  void uploadFile(String fileName,String fileType,UploadTask uploadTask, BuildContext context) {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          dialogContext = context;
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+    );
+    uploadTask.whenComplete(() => {
+      Navigator.of(dialogContext).pop(),
+
+      uploadTask.then((fileUrl) {
+        fileUrl.ref.getDownloadURL().then((value) {
+          setState(() {
+            cardUrl = value;
+          });
+
+
+        });
+      })
+    });
   }
 }

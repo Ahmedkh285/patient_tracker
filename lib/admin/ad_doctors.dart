@@ -1,13 +1,18 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class AdDoctors extends StatefulWidget {
-  AdDoctors({Key? key}) : super(key: key);
+import '../Utils.dart';
 
+class AdDoctors extends StatefulWidget {
+  AdDoctors(this.doc, {Key? key}) : super(key: key);
+  QueryDocumentSnapshot<Object?>? doc;
   @override
   _AdDoctorsState createState() => _AdDoctorsState();
 }
 
 class _AdDoctorsState extends State<AdDoctors> {
+  late BuildContext dialogContext;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -62,14 +67,14 @@ class _AdDoctorsState extends State<AdDoctors> {
             Container(
               padding: EdgeInsets.only(left: 35, top: 80),
               child: Text(
-                'Dr ***** ******',
+                'Dr ${widget.doc!["name"]}',
                 style: TextStyle(color: Colors.white, fontSize: 33),
               ),
             ),
             Container(
               padding: EdgeInsets.only(left: 35, top: 130),
               child: Text(
-                'is waiting to be verified.',
+                '${widget.doc!["spec"]}.',
                 style: TextStyle(color: Colors.white, fontSize: 20),
               ),
             ),
@@ -77,33 +82,37 @@ class _AdDoctorsState extends State<AdDoctors> {
               child: Column(
                 children: <Widget>[
                   Padding(padding: EdgeInsets.only(top: 200)),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.transparent,
-                      padding: const EdgeInsets.all(16.0),
-                    ),
-                    onPressed: () {
-                      Navigator.pushNamed(context, 'dr_patients');
-                    },
-                    child: Text(
-                      "                Ckeck profile                ",
-                      style: TextStyle(
-                        decoration: TextDecoration.none,
-                        fontSize: 25,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
+                  SizedBox(height:200,child: Image.network(widget.doc!["cardUrl"])),
                   SizedBox(
                     height: 20,
                   ),
-                  ElevatedButton(
+                  widget.doc!["verified"]=="0"?  ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       primary: Colors.transparent,
                       padding: const EdgeInsets.all(16.0),
                     ),
                     onPressed: () {
-                      Navigator.pushNamed(context, 'add_patient');
+                      showDialog(
+                          context: context,
+                          barrierDismissible: false,
+                          builder: (context) {
+                            dialogContext = context;
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+                      );
+                      FirebaseFirestore.instance.collection('doctors').doc(widget.doc!["userId"]).update({
+                        'verified': '1'
+                      }).then((_) {
+                        buildShowSnackBar(context,
+                            "Accepted success");
+                        Navigator.pop(context);
+                        Navigator.pop(dialogContext);
+                      }).catchError((error) {
+                        buildShowSnackBar(context,
+                            "error");
+                       });
                     },
                     child: Text(
                       "                     Accept                  ",
@@ -113,17 +122,17 @@ class _AdDoctorsState extends State<AdDoctors> {
                         color: Colors.white,
                       ),
                     ),
-                  ),
+                  ):Container(),
                   SizedBox(
                     height: 20,
                   ),
-                  ElevatedButton(
+                  widget.doc!["verified"]=="0"? ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       primary: Colors.transparent,
                       padding: const EdgeInsets.all(16.0),
                     ),
                     onPressed: () {
-                      Navigator.pushNamed(context, 'dr_patients');
+                      Navigator.pop(context);
                     },
                     child: Text(
                       "                    Decline                   ",
@@ -133,7 +142,7 @@ class _AdDoctorsState extends State<AdDoctors> {
                         color: Colors.red,
                       ),
                     ),
-                  ),
+                  ):Container(),
                 ],
               ),
             ),

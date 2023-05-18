@@ -1,5 +1,42 @@
 import 'package:flutter/material.dart';
 
+class CheckboxExample extends StatefulWidget {
+  const CheckboxExample({super.key});
+
+  @override
+  State<CheckboxExample> createState() => _CheckboxExampleState();
+}
+
+class _CheckboxExampleState extends State<CheckboxExample> {
+  bool isChecked = false;
+
+  @override
+  Widget build(BuildContext context) {
+    Color getColor(Set<MaterialState> states) {
+      const Set<MaterialState> interactiveStates = <MaterialState>{
+        MaterialState.pressed,
+        MaterialState.hovered,
+        MaterialState.focused,
+      };
+      if (states.any(interactiveStates.contains)) {
+        return Colors.blue;
+      }
+      return Colors.white;
+    }
+
+    return Checkbox(
+      checkColor: Colors.white,
+      fillColor: MaterialStateProperty.resolveWith(getColor),
+      value: isChecked,
+      onChanged: (bool? value) {
+        setState(() {
+          isChecked = value!;
+        });
+      },
+    );
+  }
+} //checkbox not working can you find the error please?
+
 class PtRegister extends StatefulWidget {
   const PtRegister({Key? key}) : super(key: key);
 
@@ -25,6 +62,17 @@ class _PtRegisterState extends State<PtRegister> {
         backgroundColor: Colors.transparent,
         body: Stack(
           children: [
+            Container(
+              padding: EdgeInsets.only(left: 25, top: 420),
+              child: CheckboxExample(),
+            ),
+            Container(
+              padding: EdgeInsets.only(left: 70, top: 435),
+              child: Text(
+                'i am following up with a doctor using this app',
+                style: TextStyle(color: Colors.white, fontSize: 15),
+              ),
+            ),
             Container(
               padding: EdgeInsets.only(left: 35, top: 100),
               child: Text(

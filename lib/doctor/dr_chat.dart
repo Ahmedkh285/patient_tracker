@@ -1,4 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../firebase_helper/fireBaseHelper.dart';
+import '../provider/my_provider.dart';
+import '../widget/doctor_sub_title_app_bar.dart';
+import '../widget/message_compose.dart';
+import '../widget/messages_list.dart';
+import '../widget/patient_sub_title_app_bar.dart';
 
 class DrChats extends StatefulWidget {
   DrChats({Key? key}) : super(key: key);
@@ -7,148 +16,74 @@ class DrChats extends StatefulWidget {
   _DrChatsState createState() => _DrChatsState();
 }
 
-class _DrChatsState extends State<DrChats> {
+class _DrChatsState extends State<DrChats> with WidgetsBindingObserver{
+  late MyProvider _appProvider;
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addObserver(this);
+    FireBaseHelper().updateDoctorStatus("Online",Provider.of<MyProvider>(context,listen: false).auth.currentUser!.uid);
+    // updatePeerDevice(Provider.of<MyProvider>(context,listen: false).auth.currentUser!.email, Provider.of<MyProvider>(context,listen: false).peerUserData!["email"]);
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    _appProvider = Provider.of<MyProvider>(context, listen: false);
+    super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    FireBaseHelper().updateDoctorStatus(FieldValue.serverTimestamp(),_appProvider.auth.currentUser!.uid);
+    // updatePeerDevice(_appProvider.auth.currentUser!.email, "0");
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    switch(state)
+    {
+      case AppLifecycleState.paused:
+        FireBaseHelper().updateDoctorStatus(FieldValue.serverTimestamp(),Provider.of<MyProvider>(context,listen: false).auth.currentUser!.uid);
+        // updatePeerDevice(Provider.of<MyProvider>(context,listen: false).auth.currentUser!.email, "0");
+        break;
+      case AppLifecycleState.inactive:
+        FireBaseHelper().updateDoctorStatus(FieldValue.serverTimestamp(),Provider.of<MyProvider>(context,listen: false).auth.currentUser!.uid);
+        // updatePeerDevice(Provider.of<MyProvider>(context,listen: false).auth.currentUser!.email, "0");
+        break;
+      case AppLifecycleState.detached:
+        FireBaseHelper().updateDoctorStatus(FieldValue.serverTimestamp(),Provider.of<MyProvider>(context,listen: false).auth.currentUser!.uid);
+        // updatePeerDevice(Provider.of<MyProvider>(context,listen: false).auth.currentUser!.email, "0");
+        break;
+      case AppLifecycleState.resumed:
+        FireBaseHelper().updateDoctorStatus("Online",Provider.of<MyProvider>(context,listen: false).auth.currentUser!.uid);
+        // updatePeerDevice(Provider.of<MyProvider>(context,listen: false).auth.currentUser!.email, Provider.of<MyProvider>(context,listen: false).peerUserData!["email"]);
+        break;
+    }    super.didChangeAppLifecycleState(state);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      constraints: BoxConstraints.expand(),
-      decoration: BoxDecoration(
-        image: DecorationImage(
-            image: AssetImage('assets/images/black2.jpg'), fit: BoxFit.cover),
-      ),
-      child: Scaffold(
+    return  Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.transparent,
-        ),
-        drawer: Drawer(
-          backgroundColor: Colors.white,
-          child: ListView(
-            padding: EdgeInsets.zero,
+          title: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const DrawerHeader(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    fit: BoxFit.fill,
-                    image: AssetImage('assets/images/black.jpg'),
-                  ),
-                  color: Colors.white,
-                ),
-                child: Text(''),
-              ),
-              ListTile(
-                title: const Text('My Profile'),
-                onTap: () {
-                  Navigator.pushNamed(context, 'dr_profile');
-                },
-              ),
-              ListTile(
-                title: const Text('My Patients'),
-                onTap: () {
-                  Navigator.pushNamed(context, 'dr_patients');
-                },
-              ),
-              ListTile(
-                title: const Text('Sign out'),
-                onTap: () {
-                  Navigator.pushNamed(context, 'start');
-                },
-              ),
+              Text(Provider.of<MyProvider>(context,listen: false).peerUserData!["name"],
+                  style: const TextStyle(fontSize: 18.5, fontWeight: FontWeight.bold)),
+              const DoctorSubTitleAppBar(),
             ],
           ),
         ),
-        backgroundColor: Colors.transparent,
-        body: Stack(
-          children: [
-            Container(
-              padding: EdgeInsets.only(left: 35, top: 80),
-              child: Text(
-                '  No Chats Aavailable!',
-                style: TextStyle(color: Colors.white, fontSize: 33),
-              ),
-            ),
-            Center(
-              child: Column(
-                children: <Widget>[
-                  Padding(padding: EdgeInsets.only(top: 200)),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.transparent,
-                      padding: const EdgeInsets.all(16.0),
-                    ),
-                    onPressed: () {
-                      Navigator.pushNamed(context, 'add_patient');
-                    },
-                    child: Text(
-                      "                  New Chat                 ",
-                      style: TextStyle(
-                        decoration: TextDecoration.none,
-                        fontSize: 25,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                  Row(
-                    children: [
-                      Container(
-                        width: 411,
-                        height: 270,
-                        color: Colors.transparent,
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      CircleAvatar(
-                        backgroundColor: Colors.transparent,
-                        child: IconButton(
-                          //padding: EdgeInsets.only(top: 50),
-                          color: Colors.white,
-                          onPressed: () {
-                            Navigator.pushNamed(context, 'dr_chats');
-                          },
-                          icon: Icon(
-                            Icons.chat,
-                          ),
-                        ),
-                      ),
-                      CircleAvatar(
-                        backgroundColor: Colors.transparent,
-                        child: IconButton(
-                          //padding: EdgeInsets.only(top: 50),
-                          color: Colors.white,
-                          onPressed: () {
-                            Navigator.pushNamed(context, 'dr_home');
-                          },
-                          icon: Icon(
-                            Icons.home,
-                          ),
-                        ),
-                      ),
-                      CircleAvatar(
-                        backgroundColor: Colors.transparent,
-                        child: IconButton(
-                          //padding: EdgeInsets.only(top: 50),
-                          color: Colors.white,
-                          onPressed: () {
-                            Navigator.pushNamed(context, 'dr_profile');
-                          },
-                          icon: Icon(
-                            Icons.account_box,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
+        body:Column(
+          children:  const [
+            Expanded(child: Messages(),),
+            MessagesCompose(),
           ],
-        ),
-      ),
+        )
+
     );
   }
 }

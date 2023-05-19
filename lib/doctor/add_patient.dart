@@ -158,7 +158,7 @@ class _AddPatientState extends State<AddPatient> {
                             //padding: EdgeInsets.only(top: 50),
                             color: Colors.white,
                             onPressed: () {
-                              Navigator.pushNamed(context, 'dr_chats');
+                              Navigator.pushNamed(context, 'dr_patients');
                             },
                             icon: Icon(
                               Icons.chat,

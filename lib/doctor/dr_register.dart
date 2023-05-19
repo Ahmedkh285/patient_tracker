@@ -218,7 +218,7 @@ class _DrRegisterState extends State<DrRegister> {
                                     .signUp(email: email.trim().toString(), password: password.trim().toString())
                                     .then((result) {
                                   if(result == "true"){
-                                    Navigator.pushNamed(context, 'dr_login');
+                                    Navigator.pushReplacementNamed(context, 'dr_login');
                                     Provider.of<MyProvider>(context,listen: false).auth.currentUser!.updateDisplayName(name.trim().toString());
                                     FireBaseHelper().addDoctor(
                                         Provider.of<MyProvider>(context,listen: false).auth.currentUser!.uid,

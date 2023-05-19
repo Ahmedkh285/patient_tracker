@@ -110,7 +110,7 @@ class _PtLoginState extends State<PtLogin> {
                                     password: password.trim().toString())
                                     .then((result) async {
                                   if (result == "Welcome") {
-                                    Navigator.pushNamed(context, 'pt_home');
+                                    Navigator.pushReplacementNamed(context, 'pt_home');
                                   } else if (result != null) {
                                     buildShowSnackBar(context, result);
                                     Navigator.pop(dialogContext);

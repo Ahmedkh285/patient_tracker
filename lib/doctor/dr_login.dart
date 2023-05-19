@@ -125,7 +125,7 @@ class _DrLoginState extends State<DrLogin> {
                                           if (value == "1") {
                                             Navigator.pop(dialogContext);
 
-                                            Navigator.push(
+                                            Navigator.pushReplacement(
                                               context,
                                               MaterialPageRoute(builder: (context) => DrHome()),
                                             );

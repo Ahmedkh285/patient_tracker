@@ -40,11 +40,44 @@ class FireBaseHelper {
     }
   }
 
+  Future createAccountForPatient({required String email, required String password}) async {
+
+      var userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      if (userCredential.user !=null) {
+        return userCredential.user!.uid.toString();
+      }
+
+  }
+
   Stream<QuerySnapshot<Map<String, dynamic>>> getDoctors(BuildContext context) {
     return FirebaseFirestore.instance
         .collection('doctors')
         .snapshots();
   }
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> getVerifiedDoctors(BuildContext context) {
+    return FirebaseFirestore.instance
+        .collection('doctors')
+        .where('verified', isEqualTo: '1')
+         .snapshots();
+  }
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> getPatient(BuildContext context) {
+    return FirebaseFirestore.instance
+        .collection('patients')
+        .snapshots();
+  }
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> getFilteredPatient(BuildContext context,_searchQuery) {
+    return FirebaseFirestore.instance
+        .collection('patients')
+        .where('email', isEqualTo: _searchQuery)
+        .snapshots();
+  }
+
 
 
   //SIGN OUT METHOD
@@ -63,6 +96,7 @@ class FireBaseHelper {
       'spec' : spec,
       'cardUrl':cardUrl,
       'verified':"0",
+      'userStatus' : "Online"
     });
   }
 
@@ -74,7 +108,9 @@ class FireBaseHelper {
       'name': name,
       'email': email,
       'userId': userId,
-      'docId' : docId
+      'docId' : docId,
+      'userStatus' : "Online",
+
     });
   }
 
@@ -98,9 +134,16 @@ class FireBaseHelper {
     });
   }
   // update user status
-  void updateUserStatus(userStatus,userId){
+  void updatePatientStatus(userStatus,userId){
     FirebaseFirestore.instance
-        .collection('users')
+        .collection('patients')
+        .doc(userId)
+        .update({'userStatus': userStatus});
+  }
+
+  void updateDoctorStatus(userStatus,userId){
+    FirebaseFirestore.instance
+        .collection('doctors')
         .doc(userId)
         .update({'userStatus': userStatus});
   }
@@ -238,11 +281,6 @@ class FireBaseHelper {
 
   }
 
-  void updateCallStatus(BuildContext context,status) {
-    FirebaseFirestore.instance
-        .collection("users")
-        .doc(Provider.of<MyProvider>(context, listen: false).auth.currentUser!.uid)
-        .update({"chatWith":status});
-   }
+
 
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../widget/doctors_recent_chats.dart';
+
 class DrHome extends StatefulWidget {
   DrHome({Key? key}) : super(key: key);
 
@@ -19,6 +21,16 @@ class _DrHomeState extends State<DrHome> {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.transparent,
+          actions: [
+            IconButton(onPressed: (){
+              Navigator.pushNamed(context, 'dr_patients');
+
+            }, icon: Icon(Icons.people)),
+            IconButton(onPressed: (){
+              Navigator.pushNamed(context, 'add_patient');
+
+            }, icon: Icon(Icons.add))
+          ],
         ),
         drawer: Drawer(
           backgroundColor: Colors.white,
@@ -57,7 +69,7 @@ class _DrHomeState extends State<DrHome> {
           ),
         ),
         backgroundColor: Colors.transparent,
-        body: Stack(
+        body: Column(
           children: [
             Container(
               padding: EdgeInsets.only(left: 35, top: 80),
@@ -66,103 +78,7 @@ class _DrHomeState extends State<DrHome> {
                 style: TextStyle(color: Colors.white, fontSize: 33),
               ),
             ),
-            Center(
-              child: Column(
-                children: <Widget>[
-                  Padding(padding: EdgeInsets.only(top: 200)),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.transparent,
-                      padding: const EdgeInsets.all(16.0),
-                    ),
-                    onPressed: () {
-                      Navigator.pushNamed(context, 'dr_patients');
-                    },
-                    child: Text(
-                      "                     Patients                    ",
-                      style: TextStyle(
-                        decoration: TextDecoration.none,
-                        fontSize: 25,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.transparent,
-                      padding: const EdgeInsets.all(16.0),
-                    ),
-                    onPressed: () {
-                      Navigator.pushNamed(context, 'add_patient');
-                    },
-                    child: Text(
-                      "             Add a new patient           ",
-                      style: TextStyle(
-                        decoration: TextDecoration.none,
-                        fontSize: 25,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                  Row(
-                    children: [
-                      Container(
-                        width: 411,
-                        height: 210,
-                        color: Colors.transparent,
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      CircleAvatar(
-                        backgroundColor: Colors.transparent,
-                        child: IconButton(
-                          //padding: EdgeInsets.only(top: 50),
-                          color: Colors.white,
-                          onPressed: () {
-                            Navigator.pushNamed(context, 'dr_chats');
-                          },
-                          icon: Icon(
-                            Icons.chat,
-                          ),
-                        ),
-                      ),
-                      CircleAvatar(
-                        backgroundColor: Colors.transparent,
-                        child: IconButton(
-                          //padding: EdgeInsets.only(top: 50),
-                          color: Colors.white,
-                          onPressed: () {
-                            Navigator.pushNamed(context, 'dr_home');
-                          },
-                          icon: Icon(
-                            Icons.home,
-                          ),
-                        ),
-                      ),
-                      CircleAvatar(
-                        backgroundColor: Colors.transparent,
-                        child: IconButton(
-                          //padding: EdgeInsets.only(top: 50),
-                          color: Colors.white,
-                          onPressed: () {
-                            Navigator.pushNamed(context, 'dr_profile');
-                          },
-                          icon: Icon(
-                            Icons.account_box,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
+            DoctorsRecentChats()
           ],
         ),
       ),

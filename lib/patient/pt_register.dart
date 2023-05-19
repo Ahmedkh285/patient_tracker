@@ -186,7 +186,7 @@ class _PtRegisterState extends State<PtRegister> {
                                     .signUp(email: email.trim().toString(), password: password.trim().toString())
                                     .then((result) {
                                   if(result == "true"){
-                                    Navigator.pushNamed(context, 'pt_login');
+                                    Navigator.pushReplacementNamed(context, 'pt_login');
                                     Provider.of<MyProvider>(context,listen: false).auth.currentUser!.updateDisplayName(name.trim().toString());
                                     FireBaseHelper().addPatient(
                                         Provider.of<MyProvider>(context,listen: false).auth.currentUser!.uid,

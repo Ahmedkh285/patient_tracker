@@ -111,7 +111,7 @@ class _AdLoginState extends State<AdLogin> {
                                         password: password.trim().toString())
                                     .then((result) async {
                                   if (result == "Welcome") {
-                                    Navigator.pushNamed(context, 'ad_home');
+                                    Navigator.pushReplacementNamed(context, 'ad_home');
                                   } else if (result != null) {
                                     buildShowSnackBar(context, result);
                                     Navigator.pop(dialogContext);

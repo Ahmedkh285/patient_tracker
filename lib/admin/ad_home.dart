@@ -124,24 +124,35 @@ class _AdHomeState extends State<AdHome> {
                       child:Card(
                         child: Padding(
                           padding: EdgeInsets.all(16.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                          child: Row(
+                            mainAxisAlignment:MainAxisAlignment.spaceBetween ,
                             children: [
-                              Text(
-                                snapshot.data!.docs[index]['name'],
-                                style: TextStyle(
-                                  fontSize: 20.0,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    snapshot.data!.docs[index]['name'],
+                                    style: TextStyle(
+                                      fontSize: 20.0,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  SizedBox(height: 10.0),
+                                  Text(
+                                    snapshot.data!.docs[index]['spec'],
+                                    style: TextStyle(
+                                      fontSize: 16.0,
+                                      color: Colors.grey[600],
+                                    ),
+                                  ),
+                                ],
                               ),
-                              SizedBox(height: 10.0),
-                              Text(
-                                snapshot.data!.docs[index]['spec'],
-                                style: TextStyle(
-                                  fontSize: 16.0,
-                                  color: Colors.grey[600],
-                                ),
-                              ),
+                              snapshot.data!.docs[index]['verified']=="1"?
+                                  SizedBox(
+                                      width: 24,
+                                      height: 24,
+                                      child: Image.asset("assets/images/verified.png")):Container(),
+
                             ],
                           ),
                         ),

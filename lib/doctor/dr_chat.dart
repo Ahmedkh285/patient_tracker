@@ -6,6 +6,7 @@ import '../firebase_helper/fireBaseHelper.dart';
 import '../provider/my_provider.dart';
 import '../widget/doctor_sub_title_app_bar.dart';
 import '../widget/message_compose.dart';
+import '../widget/message_compose_doctor.dart';
 import '../widget/messages_list.dart';
 import '../widget/patient_sub_title_app_bar.dart';
 
@@ -80,7 +81,7 @@ class _DrChatsState extends State<DrChats> with WidgetsBindingObserver{
         body:Column(
           children:  const [
             Expanded(child: Messages(),),
-            MessagesCompose(),
+            MessagesComposeDoctor(),
           ],
         )
 

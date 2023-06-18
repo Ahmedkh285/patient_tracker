@@ -19,7 +19,7 @@ class _AdDoctorsState extends State<AdDoctors> {
       constraints: BoxConstraints.expand(),
       decoration: BoxDecoration(
         image: DecorationImage(
-            image: AssetImage('assets/images/black2.jpg'), fit: BoxFit.cover),
+            image: AssetImage('assets/images/4907157.jpg'), fit: BoxFit.cover),
       ),
       child: Scaffold(
         appBar: AppBar(
@@ -82,67 +82,71 @@ class _AdDoctorsState extends State<AdDoctors> {
               child: Column(
                 children: <Widget>[
                   Padding(padding: EdgeInsets.only(top: 200)),
-                  SizedBox(height:200,child: Image.network(widget.doc!["cardUrl"])),
+                  SizedBox(
+                      height: 200,
+                      child: Image.network(widget.doc!["cardUrl"])),
                   SizedBox(
                     height: 20,
                   ),
-                  widget.doc!["verified"]=="0"?  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.transparent,
-                      padding: const EdgeInsets.all(16.0),
-                    ),
-                    onPressed: () {
-                      showDialog(
-                          context: context,
-                          barrierDismissible: false,
-                          builder: (context) {
-                            dialogContext = context;
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          }
-                      );
-                      FirebaseFirestore.instance.collection('doctors').doc(widget.doc!["userId"]).update({
-                        'verified': '1'
-                      }).then((_) {
-                        buildShowSnackBar(context,
-                            "Accepted success");
-                        Navigator.pop(context);
-                        Navigator.pop(dialogContext);
-                      }).catchError((error) {
-                        buildShowSnackBar(context,
-                            "error");
-                       });
-                    },
-                    child: Text(
-                      "                     Accept                  ",
-                      style: TextStyle(
-                        decoration: TextDecoration.none,
-                        fontSize: 25,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ):Container(),
+                  widget.doc!["verified"] == "0"
+                      ? ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.transparent,
+                            padding: const EdgeInsets.all(16.0),
+                          ),
+                          onPressed: () {
+                            showDialog(
+                                context: context,
+                                barrierDismissible: false,
+                                builder: (context) {
+                                  dialogContext = context;
+                                  return const Center(
+                                    child: CircularProgressIndicator(),
+                                  );
+                                });
+                            FirebaseFirestore.instance
+                                .collection('doctors')
+                                .doc(widget.doc!["userId"])
+                                .update({'verified': '1'}).then((_) {
+                              buildShowSnackBar(context, "Accepted success");
+                              Navigator.pop(context);
+                              Navigator.pop(dialogContext);
+                            }).catchError((error) {
+                              buildShowSnackBar(context, "error");
+                            });
+                          },
+                          child: Text(
+                            "                     Accept                  ",
+                            style: TextStyle(
+                              decoration: TextDecoration.none,
+                              fontSize: 25,
+                              color: Colors.white,
+                            ),
+                          ),
+                        )
+                      : Container(),
                   SizedBox(
                     height: 20,
                   ),
-                  widget.doc!["verified"]=="0"? ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.transparent,
-                      padding: const EdgeInsets.all(16.0),
-                    ),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: Text(
-                      "                    Decline                   ",
-                      style: TextStyle(
-                        decoration: TextDecoration.none,
-                        fontSize: 25,
-                        color: Colors.red,
-                      ),
-                    ),
-                  ):Container(),
+                  widget.doc!["verified"] == "0"
+                      ? ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.transparent,
+                            padding: const EdgeInsets.all(16.0),
+                          ),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text(
+                            "                    Decline                   ",
+                            style: TextStyle(
+                              decoration: TextDecoration.none,
+                              fontSize: 25,
+                              color: Colors.red,
+                            ),
+                          ),
+                        )
+                      : Container(),
                 ],
               ),
             ),

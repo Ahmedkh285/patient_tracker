@@ -14,7 +14,7 @@ class _MyStartState extends State<MyStart> {
       constraints: BoxConstraints.expand(),
       decoration: BoxDecoration(
         image: DecorationImage(
-            image: AssetImage('assets/images/black2.jpg'), fit: BoxFit.cover),
+            image: AssetImage('assets/images/4907157.jpg'), fit: BoxFit.cover),
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
@@ -24,7 +24,7 @@ class _MyStartState extends State<MyStart> {
               padding: EdgeInsets.only(left: 35, top: 130),
               child: Text(
                 'Welcome\nBack',
-                style: TextStyle(color: Colors.white, fontSize: 33),
+                style: TextStyle(color: Colors.lightBlueAccent, fontSize: 33),
               ),
             ),
             Center(
@@ -37,7 +37,7 @@ class _MyStartState extends State<MyStart> {
                   Text(
                     'I am a ',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Colors.lightBlueAccent,
                       fontSize: 25,
                     ),
                   ),
@@ -46,7 +46,7 @@ class _MyStartState extends State<MyStart> {
                   ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.transparent,
+                      primary: Colors.lightBlueAccent,
                       padding: const EdgeInsets.all(16.0),
                     ),
                     onPressed: () {
@@ -66,7 +66,7 @@ class _MyStartState extends State<MyStart> {
                   ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.transparent,
+                      primary: Colors.lightBlueAccent,
                       padding: const EdgeInsets.all(16.0),
                     ),
                     onPressed: () {

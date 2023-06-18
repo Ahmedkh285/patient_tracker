@@ -30,7 +30,7 @@ class _DrRegisterState extends State<DrRegister> {
     return Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
-          image: AssetImage('assets/images/black2.jpg'),
+          image: AssetImage('assets/images/4907157.jpg'),
           fit: BoxFit.cover,
         ),
       ),
@@ -46,7 +46,7 @@ class _DrRegisterState extends State<DrRegister> {
               padding: const EdgeInsets.only(left: 35, top: 10),
               child: const Text(
                 'Create\nAccount',
-                style: TextStyle(color: Colors.white, fontSize: 33),
+                style: TextStyle(color: Colors.lightBlueAccent, fontSize: 33),
               ),
             ),
             SingleChildScrollView(
@@ -59,7 +59,7 @@ class _DrRegisterState extends State<DrRegister> {
                 child: Column(
                   children: [
                     TextField(
-                      onChanged: (val){
+                      onChanged: (val) {
                         name = val;
                       },
                       decoration: InputDecoration(
@@ -69,20 +69,22 @@ class _DrRegisterState extends State<DrRegister> {
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
-                          borderSide: const BorderSide(color: Colors.white),
+                          borderSide:
+                              const BorderSide(color: Colors.lightBlueAccent),
                         ),
                         hintText: "Name",
-                        hintStyle: const TextStyle(color: Colors.white),
+                        hintStyle:
+                            const TextStyle(color: Colors.lightBlueAccent),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
                       ),
                     ),
                     const SizedBox(
-                      height: 30,
+                      height: 20,
                     ),
                     TextField(
-                      onChanged: (val){
+                      onChanged: (val) {
                         spec = val;
                       },
                       decoration: InputDecoration(
@@ -92,20 +94,22 @@ class _DrRegisterState extends State<DrRegister> {
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
-                          borderSide: const BorderSide(color: Colors.white),
+                          borderSide:
+                              const BorderSide(color: Colors.lightBlueAccent),
                         ),
                         hintText: "Specialization",
-                        hintStyle: const TextStyle(color: Colors.white),
+                        hintStyle:
+                            const TextStyle(color: Colors.lightBlueAccent),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
                       ),
                     ),
                     const SizedBox(
-                      height: 30,
+                      height: 20,
                     ),
                     TextField(
-                      onChanged: (val){
+                      onChanged: (val) {
                         email = val;
                       },
                       decoration: InputDecoration(
@@ -115,22 +119,24 @@ class _DrRegisterState extends State<DrRegister> {
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
-                          borderSide: const BorderSide(color: Colors.white),
+                          borderSide:
+                              const BorderSide(color: Colors.lightBlueAccent),
                         ),
                         hintText: "Email",
-                        hintStyle: const TextStyle(color: Colors.white),
+                        hintStyle:
+                            const TextStyle(color: Colors.lightBlueAccent),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
                       ),
                     ),
                     const SizedBox(
-                      height: 30,
+                      height: 20,
                     ),
                     TextField(
-                        onChanged: (val){
-                          password = val;
-                        },
+                      onChanged: (val) {
+                        password = val;
+                      },
                       obscureText: true,
                       decoration: InputDecoration(
                         focusedBorder: OutlineInputBorder(
@@ -139,10 +145,12 @@ class _DrRegisterState extends State<DrRegister> {
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
-                          borderSide: const BorderSide(color: Colors.white),
+                          borderSide:
+                              const BorderSide(color: Colors.lightBlueAccent),
                         ),
                         hintText: "Password",
-                        hintStyle: const TextStyle(color: Colors.white),
+                        hintStyle:
+                            const TextStyle(color: Colors.lightBlueAccent),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
@@ -157,30 +165,33 @@ class _DrRegisterState extends State<DrRegister> {
                         const Text(
                           'Upload Your Card',
                           style: TextStyle(
-                              color: Colors.white,
+                              color: Colors.lightBlueAccent,
                               fontSize: 20,
                               fontWeight: FontWeight.w700),
                         ),
                         InkWell(
-                          onTap: ()async {
+                          onTap: () async {
                             final status = await Permission.storage.request();
-                            if(status == PermissionStatus.granted) {
-                              final XFile? photo = await _picker.pickImage(source: ImageSource.camera);
-                              UploadTask uploadTask = FireBaseHelper().getRefFromStorageForUploadImages(photo, "", context);
+                            if (status == PermissionStatus.granted) {
+                              final XFile? photo = await _picker.pickImage(
+                                  source: ImageSource.camera);
+                              UploadTask uploadTask = FireBaseHelper()
+                                  .getRefFromStorageForUploadImages(
+                                      photo, "", context);
                               uploadFile("", "image", uploadTask, context);
-                            }else{
+                            } else {
                               await Permission.storage.request();
                             }
-
                           },
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: SizedBox(
-                              width: 100,
-                                child: cardUrl.isEmpty?Image.asset('assets/images/card.png'):Image.network(cardUrl)),
+                                width: 100,
+                                child: cardUrl.isEmpty
+                                    ? Image.asset('assets/images/card.png')
+                                    : Image.network(cardUrl)),
                           ),
                         ),
-
                       ],
                     ),
                     Row(
@@ -189,21 +200,26 @@ class _DrRegisterState extends State<DrRegister> {
                         const Text(
                           'Sing In',
                           style: TextStyle(
-                              color: Colors.white,
+                              color: Colors.lightBlueAccent,
                               fontSize: 27,
                               fontWeight: FontWeight.w700),
                         ),
                         CircleAvatar(
                           radius: 30,
-                          backgroundColor: const Color(0xff4c505b),
+                          backgroundColor: const Color(0XFF4FC3F7),
                           child: IconButton(
                             color: Colors.white,
                             onPressed: () {
-                              if(email.isEmpty || password.isEmpty || name.isEmpty || spec.isEmpty){
-                                buildShowSnackBar(context, "please check your info.");
-                              }else  if(cardUrl.isEmpty){
-                                buildShowSnackBar(context, "please upload your card.");
-                              }else{
+                              if (email.isEmpty ||
+                                  password.isEmpty ||
+                                  name.isEmpty ||
+                                  spec.isEmpty) {
+                                buildShowSnackBar(
+                                    context, "please check your info.");
+                              } else if (cardUrl.isEmpty) {
+                                buildShowSnackBar(
+                                    context, "please upload your card.");
+                              } else {
                                 showDialog(
                                     context: context,
                                     barrierDismissible: false,
@@ -212,28 +228,37 @@ class _DrRegisterState extends State<DrRegister> {
                                       return const Center(
                                         child: CircularProgressIndicator(),
                                       );
-                                    }
-                                );
+                                    });
                                 FireBaseHelper()
-                                    .signUp(email: email.trim().toString(), password: password.trim().toString())
+                                    .signUp(
+                                        email: email.trim().toString(),
+                                        password: password.trim().toString())
                                     .then((result) {
-                                  if(result == "true"){
-                                    Navigator.pushReplacementNamed(context, 'dr_login');
-                                    Provider.of<MyProvider>(context,listen: false).auth.currentUser!.updateDisplayName(name.trim().toString());
+                                  if (result == "true") {
+                                    Navigator.pushReplacementNamed(
+                                        context, 'dr_login');
+                                    Provider.of<MyProvider>(context,
+                                            listen: false)
+                                        .auth
+                                        .currentUser!
+                                        .updateDisplayName(
+                                            name.trim().toString());
                                     FireBaseHelper().addDoctor(
-                                        Provider.of<MyProvider>(context,listen: false).auth.currentUser!.uid,
+                                        Provider.of<MyProvider>(context,
+                                                listen: false)
+                                            .auth
+                                            .currentUser!
+                                            .uid,
                                         name,
                                         email,
                                         spec,
-                                        cardUrl
-                                        );
-                                    buildShowSnackBar(context, "admin review your account");
-
+                                        cardUrl);
+                                    buildShowSnackBar(
+                                        context, "admin review your account");
                                   } else if (result != null) {
                                     buildShowSnackBar(context, result);
                                     Navigator.pop(dialogContext);
-                                  }
-                                  else {
+                                  } else {
                                     Navigator.pop(dialogContext);
                                     buildShowSnackBar(context, "Try again.");
                                   }
@@ -242,7 +267,6 @@ class _DrRegisterState extends State<DrRegister> {
                                   buildShowSnackBar(context, e.toString());
                                 });
                               }
-
                             },
                             icon: const Icon(
                               Icons.arrow_forward,
@@ -252,7 +276,7 @@ class _DrRegisterState extends State<DrRegister> {
                       ],
                     ),
                     const SizedBox(
-                      height: 40,
+                      height: 10,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -266,7 +290,7 @@ class _DrRegisterState extends State<DrRegister> {
                             style: TextStyle(
                               decoration: TextDecoration.underline,
                               fontSize: 18,
-                              color: Colors.white,
+                              color: Colors.lightBlueAccent,
                             ),
                           ),
                         ),
@@ -281,7 +305,9 @@ class _DrRegisterState extends State<DrRegister> {
       ),
     );
   }
-  void uploadFile(String fileName,String fileType,UploadTask uploadTask, BuildContext context) {
+
+  void uploadFile(String fileName, String fileType, UploadTask uploadTask,
+      BuildContext context) {
     showDialog(
         context: context,
         barrierDismissible: false,
@@ -290,20 +316,16 @@ class _DrRegisterState extends State<DrRegister> {
           return const Center(
             child: CircularProgressIndicator(),
           );
-        }
-    );
-    uploadTask.whenComplete(() => {
-      Navigator.of(dialogContext).pop(),
-
-      uploadTask.then((fileUrl) {
-        fileUrl.ref.getDownloadURL().then((value) {
-          setState(() {
-            cardUrl = value;
-          });
-
-
         });
-      })
-    });
+    uploadTask.whenComplete(() => {
+          Navigator.of(dialogContext).pop(),
+          uploadTask.then((fileUrl) {
+            fileUrl.ref.getDownloadURL().then((value) {
+              setState(() {
+                cardUrl = value;
+              });
+            });
+          })
+        });
   }
 }

@@ -13,7 +13,7 @@ class _FindDoctorState extends State<FindDoctor> {
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage('assets/images/black2.jpg'),
+          image: AssetImage('assets/images/4907157.jpg'),
           fit: BoxFit.cover,
         ),
       ),
@@ -29,7 +29,7 @@ class _FindDoctorState extends State<FindDoctor> {
               padding: EdgeInsets.only(left: 35, top: 10),
               child: Text(
                 'Find \nA Doctor',
-                style: TextStyle(color: Colors.white, fontSize: 33),
+                style: TextStyle(color: Colors.black, fontSize: 33),
               ),
             ),
             SingleChildScrollView(
@@ -49,14 +49,14 @@ class _FindDoctorState extends State<FindDoctor> {
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.white),
+                          borderSide: BorderSide(color: Colors.black),
                         ),
                         icon: Icon(
                           Icons.search,
                           color: Colors.white,
                         ),
                         hintText: "Doctor username (ID)",
-                        hintStyle: TextStyle(color: Colors.white),
+                        hintStyle: TextStyle(color: Colors.black),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
@@ -75,7 +75,7 @@ class _FindDoctorState extends State<FindDoctor> {
                           backgroundColor: Colors.transparent,
                           child: IconButton(
                             //padding: EdgeInsets.only(top: 50),
-                            color: Colors.white,
+                            color: Colors.black,
                             onPressed: () {
                               Navigator.pushNamed(context, 'pt_chat');
                             },
@@ -88,7 +88,7 @@ class _FindDoctorState extends State<FindDoctor> {
                           backgroundColor: Colors.transparent,
                           child: IconButton(
                             //padding: EdgeInsets.only(top: 50),
-                            color: Colors.white,
+                            color: Colors.black,
                             onPressed: () {
                               Navigator.pushNamed(context, 'pt_home');
                             },
@@ -101,7 +101,7 @@ class _FindDoctorState extends State<FindDoctor> {
                           backgroundColor: Colors.transparent,
                           child: IconButton(
                             //padding: EdgeInsets.only(top: 50),
-                            color: Colors.white,
+                            color: Colors.black,
                             onPressed: () {
                               Navigator.pushNamed(context, 'pt_profile');
                             },
@@ -114,7 +114,7 @@ class _FindDoctorState extends State<FindDoctor> {
                           backgroundColor: Colors.transparent,
                           child: IconButton(
                             //padding: EdgeInsets.only(top: 50),
-                            color: Colors.white,
+                            color: Colors.black,
                             onPressed: () {
                               Navigator.pushNamed(context, 'pt_profile');
                             },

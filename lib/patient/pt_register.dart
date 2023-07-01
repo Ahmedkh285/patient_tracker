@@ -51,16 +51,16 @@ class PtRegister extends StatefulWidget {
 }
 
 class _PtRegisterState extends State<PtRegister> {
-   var name = "";
+  var name = "";
   var email = "";
   var password = "";
   late BuildContext dialogContext;
-   @override
+  @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage('assets/images/black2.jpg'),
+          image: AssetImage('assets/images/4907157.jpg'),
           fit: BoxFit.cover,
         ),
       ),
@@ -72,7 +72,6 @@ class _PtRegisterState extends State<PtRegister> {
         backgroundColor: Colors.transparent,
         body: Stack(
           children: [
-
             SingleChildScrollView(
               child: Container(
                 padding: EdgeInsets.only(
@@ -84,7 +83,7 @@ class _PtRegisterState extends State<PtRegister> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TextField(
-                      onChanged: (val){
+                      onChanged: (val) {
                         name = val;
                       },
                       decoration: InputDecoration(
@@ -94,10 +93,10 @@ class _PtRegisterState extends State<PtRegister> {
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.white),
+                          borderSide: BorderSide(color: Colors.black),
                         ),
                         hintText: "Name",
-                        hintStyle: TextStyle(color: Colors.white),
+                        hintStyle: TextStyle(color: Colors.black),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
@@ -107,7 +106,7 @@ class _PtRegisterState extends State<PtRegister> {
                       height: 30,
                     ),
                     TextField(
-                      onChanged: (val){
+                      onChanged: (val) {
                         email = val;
                       },
                       decoration: InputDecoration(
@@ -117,10 +116,10 @@ class _PtRegisterState extends State<PtRegister> {
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.white),
+                          borderSide: BorderSide(color: Colors.black),
                         ),
                         hintText: "Email",
-                        hintStyle: TextStyle(color: Colors.white),
+                        hintStyle: TextStyle(color: Colors.black),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
@@ -130,7 +129,7 @@ class _PtRegisterState extends State<PtRegister> {
                       height: 30,
                     ),
                     TextField(
-                      onChanged: (val){
+                      onChanged: (val) {
                         password = val;
                       },
                       obscureText: true,
@@ -141,10 +140,10 @@ class _PtRegisterState extends State<PtRegister> {
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.white),
+                          borderSide: BorderSide(color: Colors.black),
                         ),
                         hintText: "Password",
-                        hintStyle: TextStyle(color: Colors.white),
+                        hintStyle: TextStyle(color: Colors.black),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
@@ -169,9 +168,12 @@ class _PtRegisterState extends State<PtRegister> {
                           child: IconButton(
                             color: Colors.white,
                             onPressed: () {
-                              if(email.isEmpty || password.isEmpty || name.isEmpty){
-                                buildShowSnackBar(context, "please check your info.");
-                              }else{
+                              if (email.isEmpty ||
+                                  password.isEmpty ||
+                                  name.isEmpty) {
+                                buildShowSnackBar(
+                                    context, "please check your info.");
+                              } else {
                                 showDialog(
                                     context: context,
                                     barrierDismissible: false,
@@ -180,27 +182,37 @@ class _PtRegisterState extends State<PtRegister> {
                                       return const Center(
                                         child: CircularProgressIndicator(),
                                       );
-                                    }
-                                );
+                                    });
                                 FireBaseHelper()
-                                    .signUp(email: email.trim().toString(), password: password.trim().toString())
+                                    .signUp(
+                                        email: email.trim().toString(),
+                                        password: password.trim().toString())
                                     .then((result) {
-                                  if(result == "true"){
-                                    Navigator.pushReplacementNamed(context, 'pt_login');
-                                    Provider.of<MyProvider>(context,listen: false).auth.currentUser!.updateDisplayName(name.trim().toString());
+                                  if (result == "true") {
+                                    Navigator.pushReplacementNamed(
+                                        context, 'pt_login');
+                                    Provider.of<MyProvider>(context,
+                                            listen: false)
+                                        .auth
+                                        .currentUser!
+                                        .updateDisplayName(
+                                            name.trim().toString());
                                     FireBaseHelper().addPatient(
-                                        Provider.of<MyProvider>(context,listen: false).auth.currentUser!.uid,
-                                        name,
-                                        email,
-                                        "0",
+                                      Provider.of<MyProvider>(context,
+                                              listen: false)
+                                          .auth
+                                          .currentUser!
+                                          .uid,
+                                      name,
+                                      email,
+                                      "0",
                                     );
-                                    buildShowSnackBar(context, "Now You Can Login");
-
+                                    buildShowSnackBar(
+                                        context, "Now You Can Login");
                                   } else if (result != null) {
                                     buildShowSnackBar(context, result);
                                     Navigator.pop(dialogContext);
-                                  }
-                                  else {
+                                  } else {
                                     Navigator.pop(dialogContext);
                                     buildShowSnackBar(context, "Try again.");
                                   }
@@ -209,9 +221,7 @@ class _PtRegisterState extends State<PtRegister> {
                                   buildShowSnackBar(context, e.toString());
                                 });
                               }
-
                             },
-
                             icon: Icon(
                               Icons.arrow_forward,
                             ),
@@ -234,7 +244,7 @@ class _PtRegisterState extends State<PtRegister> {
                             style: TextStyle(
                               decoration: TextDecoration.underline,
                               fontSize: 18,
-                              color: Colors.white,
+                              color: Colors.black,
                             ),
                           ),
                         ),

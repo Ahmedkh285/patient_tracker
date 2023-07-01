@@ -19,20 +19,18 @@ import 'patient/find_doctor.dart';
 import 'admin/ad_login.dart';
 import 'admin/ad_home.dart';
 import 'admin/ad_doctors.dart';
+import 'patient/pt_med_his.dart';
 
 import 'start.dart';
 
-
-
-void main()  async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
-  runApp( ChangeNotifierProvider(
-      create: (_) => MyProvider(),
-      child: const PatientTracker()));
-
+  runApp(ChangeNotifierProvider(
+      create: (_) => MyProvider(), child: const PatientTracker()));
 }
+
 class PatientTracker extends StatelessWidget {
   const PatientTracker({super.key});
 
@@ -62,6 +60,7 @@ class PatientTracker extends StatelessWidget {
         'pt_home': (context) => PtHome(),
         'pt_doctors': (context) => PtDoctors(),
         'find_doctor': (context) => FindDoctor(),
+        'pt_med_his': (context) => PtMedHis(),
       },
     );
   }

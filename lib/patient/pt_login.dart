@@ -20,7 +20,7 @@ class _PtLoginState extends State<PtLogin> {
       constraints: BoxConstraints.expand(),
       decoration: BoxDecoration(
         image: DecorationImage(
-            image: AssetImage('assets/images/black2.jpg'), fit: BoxFit.cover),
+            image: AssetImage('assets/images/4907157.jpg'), fit: BoxFit.cover),
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
@@ -30,7 +30,7 @@ class _PtLoginState extends State<PtLogin> {
               padding: EdgeInsets.only(left: 35, top: 130),
               child: Text(
                 'Welcome\nBack',
-                style: TextStyle(color: Colors.white, fontSize: 33),
+                style: TextStyle(color: Colors.black, fontSize: 33),
               ),
             ),
             SingleChildScrollView(
@@ -89,7 +89,7 @@ class _PtLoginState extends State<PtLogin> {
                           radius: 30,
                           backgroundColor: Color(0xff4c505b),
                           child: IconButton(
-                            color: Colors.white,
+                            color: Colors.black,
                             onPressed: () {
                               if (email.isEmpty || password.isEmpty) {
                                 buildShowSnackBar(
@@ -106,11 +106,12 @@ class _PtLoginState extends State<PtLogin> {
                                     });
                                 FireBaseHelper()
                                     .signIn(
-                                    email: email.trim().toString(),
-                                    password: password.trim().toString())
+                                        email: email.trim().toString(),
+                                        password: password.trim().toString())
                                     .then((result) async {
                                   if (result == "Welcome") {
-                                    Navigator.pushReplacementNamed(context, 'pt_home');
+                                    Navigator.pushReplacementNamed(
+                                        context, 'pt_home');
                                   } else if (result != null) {
                                     buildShowSnackBar(context, result);
                                     Navigator.pop(dialogContext);

@@ -13,7 +13,7 @@ class _AddPatientState extends State<AddPatient> {
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage('assets/images/black2.jpg'),
+          image: AssetImage('assets/images/4907157.jpg'),
           fit: BoxFit.cover,
         ),
       ),
@@ -29,7 +29,7 @@ class _AddPatientState extends State<AddPatient> {
               padding: EdgeInsets.only(left: 35, top: 10),
               child: Text(
                 'Add \nNew Patient',
-                style: TextStyle(color: Colors.white, fontSize: 33),
+                style: TextStyle(color: Colors.black, fontSize: 33),
               ),
             ),
             SingleChildScrollView(
@@ -49,10 +49,10 @@ class _AddPatientState extends State<AddPatient> {
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.white),
+                          borderSide: BorderSide(color: Colors.black),
                         ),
                         hintText: "Patient ID",
-                        hintStyle: TextStyle(color: Colors.white),
+                        hintStyle: TextStyle(color: Colors.black),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
@@ -69,10 +69,10 @@ class _AddPatientState extends State<AddPatient> {
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.white),
+                          borderSide: BorderSide(color: Colors.black),
                         ),
                         hintText: "(Patient) Name",
-                        hintStyle: TextStyle(color: Colors.white),
+                        hintStyle: TextStyle(color: Colors.black),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
@@ -89,10 +89,10 @@ class _AddPatientState extends State<AddPatient> {
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.white),
+                          borderSide: BorderSide(color: Colors.black),
                         ),
                         hintText: "(Patient) Age",
-                        hintStyle: TextStyle(color: Colors.white),
+                        hintStyle: TextStyle(color: Colors.black),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
@@ -109,10 +109,10 @@ class _AddPatientState extends State<AddPatient> {
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.white),
+                          borderSide: BorderSide(color: Colors.black),
                         ),
                         hintText: "(Patient) Email",
-                        hintStyle: TextStyle(color: Colors.white),
+                        hintStyle: TextStyle(color: Colors.black),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
@@ -127,7 +127,7 @@ class _AddPatientState extends State<AddPatient> {
                         Text(
                           'Add Patient',
                           style: TextStyle(
-                              color: Colors.white,
+                              color: Colors.black,
                               fontSize: 27,
                               fontWeight: FontWeight.w700),
                         ),
@@ -135,7 +135,7 @@ class _AddPatientState extends State<AddPatient> {
                           radius: 30,
                           backgroundColor: Color(0xff4c505b),
                           child: IconButton(
-                            color: Colors.white,
+                            color: Colors.black,
                             onPressed: () {
                               Navigator.pushNamed(context, 'dr_home');
                             },
@@ -156,7 +156,7 @@ class _AddPatientState extends State<AddPatient> {
                           backgroundColor: Colors.transparent,
                           child: IconButton(
                             //padding: EdgeInsets.only(top: 50),
-                            color: Colors.white,
+                            color: Colors.black,
                             onPressed: () {
                               Navigator.pushNamed(context, 'dr_patients');
                             },
@@ -169,7 +169,7 @@ class _AddPatientState extends State<AddPatient> {
                           backgroundColor: Colors.transparent,
                           child: IconButton(
                             //padding: EdgeInsets.only(top: 50),
-                            color: Colors.white,
+                            color: Colors.black,
                             onPressed: () {
                               Navigator.pushNamed(context, 'dr_home');
                             },
@@ -182,7 +182,7 @@ class _AddPatientState extends State<AddPatient> {
                           backgroundColor: Colors.transparent,
                           child: IconButton(
                             //padding: EdgeInsets.only(top: 50),
-                            color: Colors.white,
+                            color: Colors.black,
                             onPressed: () {
                               Navigator.pushNamed(context, 'dr_profile');
                             },

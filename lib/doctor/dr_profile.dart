@@ -16,7 +16,7 @@ class _DrProfileState extends State<DrProfile> {
       constraints: BoxConstraints.expand(),
       decoration: BoxDecoration(
         image: DecorationImage(
-            image: AssetImage('assets/images/black2.jpg'), fit: BoxFit.cover),
+            image: AssetImage('assets/images/4907157.jpg'), fit: BoxFit.cover),
       ),
       child: Scaffold(
         appBar: AppBar(

@@ -68,14 +68,14 @@ class _AdDoctorsState extends State<AdDoctors> {
               padding: EdgeInsets.only(left: 35, top: 80),
               child: Text(
                 'Dr ${widget.doc!["name"]}',
-                style: TextStyle(color: Colors.white, fontSize: 33),
+                style: TextStyle(color: Colors.black, fontSize: 33),
               ),
             ),
             Container(
               padding: EdgeInsets.only(left: 35, top: 130),
               child: Text(
                 '${widget.doc!["spec"]}.',
-                style: TextStyle(color: Colors.white, fontSize: 20),
+                style: TextStyle(color: Colors.black, fontSize: 20),
               ),
             ),
             Center(

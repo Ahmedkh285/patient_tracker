@@ -16,20 +16,22 @@ class _DrHomeState extends State<DrHome> {
       constraints: BoxConstraints.expand(),
       decoration: BoxDecoration(
         image: DecorationImage(
-            image: AssetImage('assets/images/black2.jpg'), fit: BoxFit.cover),
+            image: AssetImage('assets/images/4907157.jpg'), fit: BoxFit.cover),
       ),
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           actions: [
-            IconButton(onPressed: (){
-              Navigator.pushNamed(context, 'dr_patients');
-
-            }, icon: Icon(Icons.people)),
-            IconButton(onPressed: (){
-              Navigator.pushNamed(context, 'add_patient');
-
-            }, icon: Icon(Icons.add))
+            IconButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, 'dr_patients');
+                },
+                icon: Icon(Icons.people)),
+            IconButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, 'add_patient');
+                },
+                icon: Icon(Icons.add))
           ],
         ),
         drawer: Drawer(
@@ -75,7 +77,7 @@ class _DrHomeState extends State<DrHome> {
               padding: EdgeInsets.only(left: 35, top: 80),
               child: Text(
                 'Hello doctor!',
-                style: TextStyle(color: Colors.white, fontSize: 33),
+                style: TextStyle(color: Colors.black, fontSize: 33),
               ),
             ),
             DoctorsRecentChats()

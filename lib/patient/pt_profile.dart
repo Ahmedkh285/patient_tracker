@@ -16,7 +16,7 @@ class _PtProfileState extends State<PtProfile> {
       constraints: BoxConstraints.expand(),
       decoration: BoxDecoration(
         image: DecorationImage(
-            image: AssetImage('assets/images/black2.jpg'), fit: BoxFit.cover),
+            image: AssetImage('assets/images/4907157.jpg'), fit: BoxFit.cover),
       ),
       child: Scaffold(
         appBar: AppBar(
@@ -31,7 +31,7 @@ class _PtProfileState extends State<PtProfile> {
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     fit: BoxFit.fill,
-                    image: AssetImage('assets/images/black.jpg'),
+                    image: AssetImage('assets/images/4907157.jpg'),
                   ),
                   color: Colors.white,
                 ),
@@ -66,15 +66,15 @@ class _PtProfileState extends State<PtProfile> {
               height: 200,
               child: CircleAvatar(
                 backgroundColor: Colors.white,
-                //backgroundImage: AssetImage('assets/images/tota.JPG'),
+                //backgroundImage: AssetImage('assets/images/black.png'),
               ),
               padding: EdgeInsets.only(left: 0, top: 30),
             ),
             Container(
               padding: EdgeInsets.only(left: 250, top: 120),
               child: Text(
-                'Doctor\nName',
-                style: TextStyle(color: Colors.white, fontSize: 33),
+                'Patient\nName',
+                style: TextStyle(color: Colors.black, fontSize: 33),
               ),
             ),
             Center(
@@ -97,7 +97,7 @@ class _PtProfileState extends State<PtProfile> {
                       style: TextStyle(
                         decoration: TextDecoration.none,
                         fontSize: 25,
-                        color: Colors.white,
+                        color: Colors.black,
                       ),
                     ),
                   ),
@@ -117,7 +117,7 @@ class _PtProfileState extends State<PtProfile> {
                       style: TextStyle(
                         decoration: TextDecoration.none,
                         fontSize: 25,
-                        color: Colors.white,
+                        color: Colors.black,
                       ),
                     ),
                   ),
@@ -182,7 +182,7 @@ class _PtProfileState extends State<PtProfile> {
                         backgroundColor: Colors.transparent,
                         child: IconButton(
                           //padding: EdgeInsets.only(top: 50),
-                          color: Colors.white,
+                          color: Colors.black,
                           onPressed: () {
                             Navigator.pushNamed(context, 'pt_chats');
                           },
@@ -195,7 +195,7 @@ class _PtProfileState extends State<PtProfile> {
                         backgroundColor: Colors.transparent,
                         child: IconButton(
                           //padding: EdgeInsets.only(top: 50),
-                          color: Colors.white,
+                          color: Colors.black,
                           onPressed: () {
                             Navigator.pushNamed(context, 'pt_home');
                           },
@@ -208,12 +208,25 @@ class _PtProfileState extends State<PtProfile> {
                         backgroundColor: Colors.transparent,
                         child: IconButton(
                           //padding: EdgeInsets.only(top: 50),
-                          color: Colors.white,
+                          color: Colors.black,
                           onPressed: () {
                             Navigator.pushNamed(context, 'pt_profile');
                           },
                           icon: Icon(
                             Icons.account_box,
+                          ),
+                        ),
+                      ),
+                      CircleAvatar(
+                        backgroundColor: Colors.transparent,
+                        child: IconButton(
+                          //padding: EdgeInsets.only(top: 50),
+                          color: Colors.black,
+                          onPressed: () {
+                            Navigator.pushNamed(context, 'pt_med_his');
+                          },
+                          icon: Icon(
+                            Icons.medical_services_rounded,
                           ),
                         ),
                       ),

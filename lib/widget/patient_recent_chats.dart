@@ -43,6 +43,7 @@ class PatientRecentChats extends StatelessWidget {
               ],
             ):
             ListView.builder(
+              physics: BouncingScrollPhysics(),
                 itemCount: snapshot.data!.docs.length,
                 scrollDirection: Axis.vertical,
                 itemBuilder: (BuildContext context, int index){

@@ -19,6 +19,7 @@ class FireBaseHelper {
       var userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password,
+
       );
       if (userCredential.user !=null) {
         return "true";
@@ -110,6 +111,7 @@ class FireBaseHelper {
       'userId': userId,
       'docId' : docId,
       'userStatus' : "Online",
+      'reports':[],
 
     });
   }

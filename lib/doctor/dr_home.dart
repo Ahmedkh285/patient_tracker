@@ -1,5 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import 'package:google_fonts/google_fonts.dart';
+import 'package:patient_tracker/doctor/add_report.dart';
+import 'package:patient_tracker/provider/shared_preferences.dart';
+import 'package:provider/provider.dart';
+import '../provider/my_provider.dart';
 import '../widget/doctors_recent_chats.dart';
 
 class DrHome extends StatefulWidget {
@@ -12,76 +18,205 @@ class DrHome extends StatefulWidget {
 class _DrHomeState extends State<DrHome> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      constraints: BoxConstraints.expand(),
-      decoration: BoxDecoration(
-        image: DecorationImage(
-            image: AssetImage('assets/images/4907157.jpg'), fit: BoxFit.cover),
+    return Scaffold(
+      appBar: AppBar(
+        titleSpacing: 0,
+        backgroundColor:   Colors.white,
+        elevation: 0,
+        iconTheme: const IconThemeData(
+          color:  Color.fromRGBO(22, 75, 96,1),
+        ),
+        title:
+        Text(
+          'Welcome dr, ${Provider.of<MyProvider>(context,listen: false).auth.currentUser!.displayName}',
+          style: GoogleFonts.lato(fontSize: 20,fontWeight: FontWeight.bold,color: const Color.fromRGBO(22, 75, 96,1),),
+        ),
+
       ),
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          actions: [
-            IconButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, 'dr_patients');
-                },
-                icon: Icon(Icons.people)),
-            IconButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, 'add_patient');
-                },
-                icon: Icon(Icons.add))
+      drawer: Drawer(
+        backgroundColor: const Color.fromRGBO(22, 75, 96,1),
+        child: ListView(
+          physics: BouncingScrollPhysics(),
+          padding: EdgeInsets.zero,
+          children: [
+             DrawerHeader(
+               curve: Curves.easeInCirc,
+               padding: EdgeInsets.all(0),
+              decoration: BoxDecoration(
+                color: Colors.white,
+              ),
+              child:Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Image(image: AssetImage('assets/images/12.png')),
+                  SizedBox(width: 10,),
+                  Text(
+                    'Dr, ${Provider.of<MyProvider>(context,listen: false).auth.currentUser!.displayName}',
+                    style: GoogleFonts.lato(fontSize: 20,fontWeight: FontWeight.bold,color: const Color.fromRGBO(22, 75, 96,1),),
+                  ),
+
+                ],
+              ),
+            ),
+            ListTile(
+              title:  Text('My Profile',style: GoogleFonts.lato(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 16),),
+              onTap: () {
+                Navigator.pushNamed(context, 'dr_profile');
+              },
+            ),
+            ListTile(
+              title:  Text('My Patients',style: GoogleFonts.lato(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 16),),
+              onTap: () {
+                Navigator.pushNamed(context, 'dr_patients');
+              },
+            ),
+            ListTile(
+              title:  Text('Sign out',style: GoogleFonts.lato(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 16),),
+              onTap: () {
+                Navigator.pushNamed(context, 'start');
+              },
+            ),
           ],
         ),
-        drawer: Drawer(
-          backgroundColor: Colors.white,
-          child: ListView(
-            padding: EdgeInsets.zero,
+      ),
+      backgroundColor: Colors.white,
+      body: Padding(
+        padding: const EdgeInsets.all(20),
+        child: SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const DrawerHeader(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    fit: BoxFit.fill,
-                    image: AssetImage('assets/images/black.jpg'),
+              Text('Recent Chat',style: GoogleFonts.lato(fontWeight: FontWeight.bold,fontSize: 30, color: const Color.fromRGBO(22, 75, 96,1),),),
+              const SizedBox(height: 20,),
+              Material(
+                elevation: 10,
+                borderRadius: BorderRadius.circular(15),
+                child: Container(
+                  height: 300,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    gradient: const LinearGradient(
+                      colors: [Color.fromRGBO(22, 75, 96,1),Colors.black87],
+                    ),
                   ),
-                  color: Colors.white,
+                    child: const Padding(
+                      padding: EdgeInsets.all(10.0),
+                      child: DoctorsRecentChats(),
+                    )
                 ),
-                child: Text(''),
               ),
-              ListTile(
-                title: const Text('My Profile'),
-                onTap: () {
-                  Navigator.pushNamed(context, 'dr_profile');
+              const SizedBox(height: 20,),
+              InkWell(
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=> AddReport()));
+
                 },
+                child: Material(
+                  elevation: 5,
+                  borderRadius: BorderRadius.circular(15),
+                  child: Container(
+                    height: 80,
+                    width: double.infinity,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        gradient: const LinearGradient(
+                            colors: [Color.fromRGBO(22, 75, 96,1),Colors.black87],
+                        ),
+
+                      ),
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 20),
+                          child: Text('Add Report',style: GoogleFonts.lato(fontSize: 18,fontWeight: FontWeight.bold,color: Colors.white),),
+                        ),
+                        const SizedBox(width: 10,),
+                        const Icon(CupertinoIcons.news,size: 24,color: Colors.white,),
+                        const Spacer(),
+                        const Icon(Icons.chevron_right_outlined,color: Colors.white,size: 30,),
+                        const SizedBox(width: 10,),
+
+                      ],
+                    ),
+                  ),
+                ),
               ),
-              ListTile(
-                title: const Text('My Patients'),
-                onTap: () {
+              const SizedBox(height: 20,),
+              InkWell(
+                onTap: (){
+                  Navigator.pushNamed(context, 'add_patient');
+
+                },
+                child: Material(
+                  elevation: 5,
+                  borderRadius: BorderRadius.circular(15),
+                  child: Container(
+                    height: 80,
+                    width: double.infinity,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        gradient: const LinearGradient(
+                            colors: [Color.fromRGBO(22, 75, 96,1),Colors.black87],
+                        ),
+
+                      ),
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 20),
+                          child: Text('Add New Patient',style: GoogleFonts.lato(fontSize: 18,fontWeight: FontWeight.bold,color: Colors.white),),
+                        ),
+                        const SizedBox(width: 10,),
+                        const Icon(Icons.person_add,size: 24,color: Colors.white,),
+                        const Spacer(),
+                        const Icon(Icons.chevron_right_outlined,color: Colors.white,size: 30,),
+                        const SizedBox(width: 10,),
+
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20,),
+              InkWell(
+                onTap: (){
                   Navigator.pushNamed(context, 'dr_patients');
+
                 },
-              ),
-              ListTile(
-                title: const Text('Sign out'),
-                onTap: () {
-                  Navigator.pushNamed(context, 'start');
-                },
+                child: Material(
+                  elevation: 5,
+                  borderRadius: BorderRadius.circular(15),
+                  child: Container(
+                    height: 80,
+                    width: double.infinity,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        gradient: const LinearGradient(
+                            colors: [Color.fromRGBO(22, 75, 96,1),Colors.black87],
+                        ),
+
+                      ),
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 20),
+                          child: Text('Patients',style: GoogleFonts.lato(fontSize: 18,fontWeight: FontWeight.bold,color: Colors.white),),
+                        ),
+                        const SizedBox(width: 10,),
+                        const Icon(Icons.people_alt,size: 24,color: Colors.white,),
+                        const Spacer(),
+                        const Icon(Icons.chevron_right_outlined,color: Colors.white,size: 30,),
+                        const SizedBox(width: 10,),
+
+                      ],
+                    ),
+                  ),
+                ),
               ),
             ],
           ),
-        ),
-        backgroundColor: Colors.transparent,
-        body: Column(
-          children: [
-            Container(
-              padding: EdgeInsets.only(left: 35, top: 80),
-              child: Text(
-                'Hello doctor!',
-                style: TextStyle(color: Colors.black, fontSize: 33),
-              ),
-            ),
-            DoctorsRecentChats()
-          ],
         ),
       ),
     );

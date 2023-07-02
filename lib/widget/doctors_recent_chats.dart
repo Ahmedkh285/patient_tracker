@@ -11,10 +11,10 @@ class DoctorsRecentChats extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Expanded(
+    return Expanded(
       child: ClipRRect(
         borderRadius:const BorderRadius.only(
-            topLeft: Radius.circular(5.0),
+            topLeft: Radius.circular(5),
             topRight: Radius.circular(5.0)
         ),
         child: StreamBuilder(
@@ -43,6 +43,7 @@ class DoctorsRecentChats extends StatelessWidget {
               ],
             ):
             ListView.builder(
+              physics: const BouncingScrollPhysics(),
                 itemCount: snapshot.data!.docs.length,
                 scrollDirection: Axis.vertical,
                 itemBuilder: (BuildContext context, int index){

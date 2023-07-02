@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import '../firebase_helper/fireBaseHelper.dart';
@@ -67,11 +68,19 @@ class _PtChatState extends State<PtChat> with WidgetsBindingObserver{
   Widget build(BuildContext context) {
     return  Scaffold(
         appBar: AppBar(
+          elevation: 2,
+          backgroundColor: Color.fromRGBO(83, 113, 136,1),
+          leading: IconButton(
+            onPressed: (){
+              Navigator.pop(context);
+            },
+            icon: Icon(Icons.chevron_left,size: 30,),
+          ),
           title: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(Provider.of<MyProvider>(context,listen: false).peerUserData!["name"],
-                  style: const TextStyle(fontSize: 18.5, fontWeight: FontWeight.bold)),
+                  style:  GoogleFonts.lato(fontSize: 18.5, fontWeight: FontWeight.bold)),
               const PatientSubTitleAppBar(),
             ],
           ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class AddPatient extends StatefulWidget {
   const AddPatient({Key? key}) : super(key: key);
@@ -10,195 +11,222 @@ class AddPatient extends StatefulWidget {
 class _AddPatientState extends State<AddPatient> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage('assets/images/4907157.jpg'),
-          fit: BoxFit.cover,
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          onPressed: (){
+            Navigator.pop(context);
+          },
+          icon: const Icon(Icons.keyboard_arrow_left,size: 30,),
         ),
-      ),
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
+        iconTheme: const IconThemeData(
+          color: Color.fromRGBO(22, 75, 96,1),
         ),
         backgroundColor: Colors.transparent,
-        body: Stack(
-          children: [
-            Container(
-              padding: EdgeInsets.only(left: 35, top: 10),
-              child: Text(
-                'Add \nNew Patient',
-                style: TextStyle(color: Colors.black, fontSize: 33),
+        elevation: 0,
+        title: Text('Add New Patient',style: GoogleFonts.lato( color: const Color.fromRGBO(22, 75, 96,1),fontWeight: FontWeight.bold),),
+      ),
+      backgroundColor: Colors.white,
+      body: Stack(
+        children: [
+          SingleChildScrollView(
+            child: Container(
+              padding: EdgeInsets.only(
+                top: MediaQuery.of(context).size.height * 0.05,
+                left: 35,
+                right: 35,
               ),
-            ),
-            SingleChildScrollView(
-              child: Container(
-                padding: EdgeInsets.only(
-                  top: MediaQuery.of(context).size.height * 0.14,
-                  left: 35,
-                  right: 35,
-                ),
-                child: Column(
-                  children: [
-                    TextField(
+              child: Column(
+                children: [
+                  Material(
+                    child: TextField(
+
                       decoration: InputDecoration(
+                        fillColor: Colors.grey.shade200,
+                        filled: true,
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.black),
+                          borderSide: BorderSide.none,
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.black),
+                          borderSide: BorderSide.none,
                         ),
                         hintText: "Patient ID",
-                        hintStyle: TextStyle(color: Colors.black),
+                        hintStyle: const TextStyle(color: Color.fromRGBO(22, 75, 96,1),),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
                       ),
                     ),
-                    SizedBox(
-                      height: 30,
-                    ),
-                    TextField(
+                    elevation: 5,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  Material(
+                    elevation: 5,
+                    borderRadius: BorderRadius.circular(10),
+                    child: TextField(
                       decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.grey.shade200,
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.black),
+                          borderSide: BorderSide.none,
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.black),
+                          borderSide: BorderSide.none,
                         ),
                         hintText: "(Patient) Name",
-                        hintStyle: TextStyle(color: Colors.black),
+                        hintStyle: const TextStyle(   color: Color.fromRGBO(22, 75, 96,1),),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
                       ),
                     ),
-                    SizedBox(
-                      height: 30,
-                    ),
-                    TextField(
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  Material(
+                    elevation: 5,
+                    borderRadius: BorderRadius.circular(10),
+                    child: TextField(
                       decoration: InputDecoration(
+                        fillColor: Colors.grey.shade200,
+                        filled: true,
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.black),
+                          borderSide: BorderSide.none,
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.black),
+                          borderSide: BorderSide.none
                         ),
                         hintText: "(Patient) Age",
-                        hintStyle: TextStyle(color: Colors.black),
+                        hintStyle: const TextStyle(     color: Color.fromRGBO(22, 75, 96,1),),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
                       ),
                     ),
-                    SizedBox(
-                      height: 30,
-                    ),
-                    TextField(
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  Material(
+                    elevation: 5,
+                    borderRadius: BorderRadius.circular(10),
+                    child: TextField(
                       decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.grey.shade200,
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.black),
+                          borderSide:BorderSide.none,
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.black),
+                          borderSide:BorderSide.none,
                         ),
                         hintText: "(Patient) Email",
-                        hintStyle: TextStyle(color: Colors.black),
+                        hintStyle: const TextStyle(     color: Color.fromRGBO(22, 75, 96,1),),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
                       ),
                     ),
-                    SizedBox(
-                      height: 40,
+                  ),
+                  const SizedBox(
+                    height: 40,
+                  ),
+                  Container(
+                    height: 70,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      gradient: const LinearGradient(
+                        colors: [Color.fromRGBO(22, 75, 96,1),Colors.black87],
+                      ),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    child: Row(
                       children: [
-                        Text(
-                          'Add Patient',
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 27,
-                              fontWeight: FontWeight.w700),
+                         Padding(
+                           padding: const EdgeInsets.only(left: 20),
+                           child: Text(
+                            'Add Patient',
+                            style: GoogleFonts.lato(
+                                color: Colors.white,
+                                fontSize: 27,
+                                fontWeight: FontWeight.w700),
                         ),
-                        CircleAvatar(
-                          radius: 30,
-                          backgroundColor: Color(0xff4c505b),
-                          child: IconButton(
-                            color: Colors.black,
-                            onPressed: () {
-                              Navigator.pushNamed(context, 'dr_home');
-                            },
-                            icon: Icon(
-                              Icons.arrow_forward,
-                            ),
-                          ),
-                        ),
+                         ),
+                        const Spacer(),
+                        IconButton(onPressed:(){
+                          Navigator.pushNamed(context, 'dr_home');
+                        }, icon: Icon(Icons.chevron_right_outlined,color: Colors.white,size: 30,)),
+                        SizedBox(width: 5,),
                       ],
                     ),
-                    SizedBox(
-                      height: 25,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        CircleAvatar(
-                          backgroundColor: Colors.transparent,
-                          child: IconButton(
-                            //padding: EdgeInsets.only(top: 50),
-                            color: Colors.black,
-                            onPressed: () {
-                              Navigator.pushNamed(context, 'dr_patients');
-                            },
-                            icon: Icon(
-                              Icons.chat,
-                            ),
+                  ),
+                  const SizedBox(
+                    height: 60,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      CircleAvatar(
+                        backgroundColor: Colors.transparent,
+                        child: IconButton(
+                          //padding: EdgeInsets.only(top: 50),
+                          color: Color.fromRGBO(22, 75, 96,1),
+                          onPressed: () {
+                            Navigator.pushNamed(context, 'dr_patients');
+                          },
+                          icon: const Icon(
+                            Icons.chat,
+                            size: 30,
                           ),
                         ),
-                        CircleAvatar(
-                          backgroundColor: Colors.transparent,
-                          child: IconButton(
-                            //padding: EdgeInsets.only(top: 50),
-                            color: Colors.black,
-                            onPressed: () {
-                              Navigator.pushNamed(context, 'dr_home');
-                            },
-                            icon: Icon(
-                              Icons.home,
-                            ),
+                      ),
+                      CircleAvatar(
+                        backgroundColor: Colors.transparent,
+                        child: IconButton(
+                          //padding: EdgeInsets.only(top: 50),
+                          color: Color.fromRGBO(22, 75, 96,1),
+                          onPressed: () {
+                            Navigator.pushNamed(context, 'dr_home');
+                          },
+                          icon: const Icon(
+                            Icons.home,
+                            size: 30,
                           ),
                         ),
-                        CircleAvatar(
-                          backgroundColor: Colors.transparent,
-                          child: IconButton(
-                            //padding: EdgeInsets.only(top: 50),
-                            color: Colors.black,
-                            onPressed: () {
-                              Navigator.pushNamed(context, 'dr_profile');
-                            },
-                            icon: Icon(
-                              Icons.account_box,
-                            ),
+                      ),
+                      CircleAvatar(
+                        backgroundColor: Colors.transparent,
+                        child: IconButton(
+                          //padding: EdgeInsets.only(top: 50),
+                          color: Color.fromRGBO(22, 75, 96,1),
+                          onPressed: () {
+                            Navigator.pushNamed(context, 'dr_profile');
+                          },
+                          icon: const Icon(
+                            Icons.account_box,
+                            size: 30,
                           ),
                         ),
-                      ],
-                    ),
-                  ],
-                ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
-            )
-          ],
-        ),
+            ),
+          )
+        ],
       ),
     );
   }

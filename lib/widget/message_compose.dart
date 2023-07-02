@@ -45,11 +45,12 @@ class _MessagesComposeState extends State<MessagesCompose> with WidgetsBindingOb
         SizedBox(
             width: MediaQuery.of(context).size.width - 55,
             child: Card(
-              color: Colors.blueAccent,
+
+            color: Color.fromRGBO(83, 113, 136,1),
               margin: const EdgeInsets.only(
                   left: 5, right: 5, bottom: 8),
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(25)),
+                  borderRadius: BorderRadius.circular(15)),
               child: TextField(
                   style: const TextStyle(color: Colors.white,),
                   controller: _textController,
@@ -72,7 +73,7 @@ class _MessagesComposeState extends State<MessagesCompose> with WidgetsBindingOb
                   },
                   decoration: InputDecoration(
                     border: InputBorder.none,
-                    hintText: "Type your message",
+                    hintText: "   Type your message...",
                     hintStyle: const TextStyle(color: Colors.white,),
                     suffixIcon: Row(
                       mainAxisSize: MainAxisSize.min,
@@ -91,7 +92,7 @@ class _MessagesComposeState extends State<MessagesCompose> with WidgetsBindingOb
                               }
 
                             },
-                            icon: const Icon(Icons.camera,color: Colors.white,)
+                            icon: const Icon(Icons.camera_alt,color: Colors.white,)
                         )
                       ],
                     ),
@@ -100,10 +101,10 @@ class _MessagesComposeState extends State<MessagesCompose> with WidgetsBindingOb
             )),
         Padding(
           padding:
-          const EdgeInsets.only(bottom: 8.0, right: 2),
+          const EdgeInsets.only(bottom: 8.0, right: 0),
           child: CircleAvatar(
             radius: 25,
-            backgroundColor: Colors.blueAccent,
+            backgroundColor:  Color.fromRGBO(83, 113, 136,1),
             child:IconButton(
                 onPressed: () async {
                   if (sendChatButton) {

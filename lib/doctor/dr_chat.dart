@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import '../firebase_helper/fireBaseHelper.dart';
@@ -69,12 +70,27 @@ class _DrChatsState extends State<DrChats> with WidgetsBindingObserver{
   Widget build(BuildContext context) {
     return  Scaffold(
         appBar: AppBar(
+          elevation: 5,
+          backgroundColor:  const Color.fromRGBO(22, 75, 96,1),
+          leading: IconButton(
+            icon: const Icon(Icons.chevron_left,size: 30,),
+            onPressed: (){
+              Navigator.pop(context);
+            },
+          ),
           title: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(Provider.of<MyProvider>(context,listen: false).peerUserData!["name"],
-                  style: const TextStyle(fontSize: 18.5, fontWeight: FontWeight.bold)),
-              const DoctorSubTitleAppBar(),
+              Row(
+                children: [
+                  Text(Provider.of<MyProvider>(context,listen: false).peerUserData!["name"],
+                      style:  GoogleFonts.lato(fontSize: 18.5, fontWeight: FontWeight.bold)),
+                  const Spacer(),
+                  const DoctorSubTitleAppBar(),
+                ],
+              ),
+              SelectableText(Provider.of<MyProvider>(context,listen: false).peerUserData!["userId"],
+                  style: const TextStyle(fontSize: 11, )),
             ],
           ),
         ),

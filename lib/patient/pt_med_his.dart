@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PtMedHis extends StatefulWidget {
@@ -132,10 +133,29 @@ class _PtMedHisState extends State<PtMedHis> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('My Medical History'),
+        leading: IconButton(
+          onPressed: (){
+            Navigator.pop(context);
+          },
+          icon: Icon(Icons.chevron_left,color: Color.fromRGBO(83, 113, 136,1),size: 30,),
+        ),
+        titleSpacing: 0,
+        backgroundColor:   Colors.white,
+        elevation: 0,
+        iconTheme: const IconThemeData(
+            color: Color.fromRGBO(83, 113, 136,1)
+        ),
+        title:
+        Text(
+          'Medical History',
+          style: GoogleFonts.lato(fontSize: 20,fontWeight: FontWeight.bold, color: Color.fromRGBO(83, 113, 136,1),),
+        ),
+
       ),
       body: ListView(
+        physics: BouncingScrollPhysics(),
         children: _conditions.keys.map((String condition) {
           if (condition == 'Cancer') {
             return Column(
@@ -192,6 +212,7 @@ class _PtMedHisState extends State<PtMedHis> {
         }).toList(),
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor:  Color.fromRGBO(83, 113, 136,1),
         onPressed: _saveToSharedPreferences,
         child: Icon(Icons.save),
       ),

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import '../firebase_helper/fireBaseHelper.dart';
@@ -17,79 +18,60 @@ class _DrPatientsState extends State<DrPatients> {
   String _searchQuery = '';
   @override
   Widget build(BuildContext context) {
-    return Container(
-      constraints: const BoxConstraints.expand(),
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-            image: AssetImage('assets/images/4907157.jpg'), fit: BoxFit.cover),
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          onPressed: (){
+            Navigator.pop(context);
+          },
+          icon: const Icon(Icons.keyboard_arrow_left,size: 30,),
+        ),
+        iconTheme: const IconThemeData(
+          color: Color.fromRGBO(22, 75, 96,1),
+        ),
+        backgroundColor: Colors.white,
+        elevation: 0,
+        title: Text('Patients',style: GoogleFonts.lato( color: const Color.fromRGBO(22, 75, 96,1),fontWeight: FontWeight.bold),),
       ),
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text("Patients"),
-          backgroundColor: Colors.transparent,
-        ),
-        drawer: Drawer(
-          backgroundColor: Colors.white,
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: [
-              const DrawerHeader(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    fit: BoxFit.fill,
-                    image: AssetImage('assets/images/black.jpg'),
-                  ),
-                  color: Colors.white,
-                ),
-                child: Text(''),
-              ),
-              ListTile(
-                title: const Text('My Profile'),
-                onTap: () {
-                  Navigator.pushNamed(context, 'dr_profile');
-                },
-              ),
-              ListTile(
-                title: const Text('My Patients'),
-                onTap: () {
-                  Navigator.pushNamed(context, 'dr_patients');
-                },
-              ),
-              ListTile(
-                title: const Text('Sign out'),
-                onTap: () {
-                  Navigator.pushNamed(context, 'start');
-                },
-              ),
-            ],
-          ),
-        ),
-        backgroundColor: Colors.transparent,
-        body: Column(
+      backgroundColor: Colors.white,
+      body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(20),
               child: Container(
+                height: 50,
+                width: double.infinity,
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.circular(10.0),
-                  border: Border.all(
-                    color: Colors.grey,
-                    width: 1.0,
-                  ),
+                  borderRadius: BorderRadius.circular(10),
                 ),
-                child: TextField(
-                  controller: _searchController,
-                  onChanged: (value) {
-                    setState(() {
-                      _searchQuery = value;
-                    });
-                  },
-                  decoration: const InputDecoration(
-                    hintText: 'Search by email',
-                    prefixIcon: Icon(Icons.search),
-                    border: InputBorder.none,
-                    contentPadding: EdgeInsets.symmetric(vertical: 10.0),
+                child: Material(
+                  elevation: 5,
+                  borderOnForeground: false,
+                  borderRadius: BorderRadius.circular(10),
+                  child: TextField(
+
+                    controller: _searchController,
+                    onChanged: (value) {
+                      setState(() {
+                        _searchQuery = value;
+                      });
+                    },
+                    decoration:  InputDecoration(
+                      enabledBorder:OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide.none
+                      ),
+                      fillColor: Colors.grey.shade200,
+                      filled: true,
+                      hintText: 'Search by email',
+                      prefixIcon: const Icon(Icons.search),
+                      border: InputBorder.none,
+
+                      contentPadding: const EdgeInsets.symmetric(vertical: 15.0),
+                    ),
                   ),
                 ),
               ),
@@ -113,10 +95,11 @@ class _DrPatientsState extends State<DrPatients> {
                           ? const Text(
                               'No patients found',
                               style:
-                                  TextStyle(color: Colors.white, fontSize: 33),
+                                  TextStyle(color: Colors.black, fontSize: 33),
                             )
                           : ListView.builder(
-                              reverse: true,
+                          physics: const BouncingScrollPhysics(),
+                          reverse: true,
                               shrinkWrap: true,
                               itemCount: snapshot.data!.docs.length,
                               itemBuilder: (context, index) {
@@ -207,71 +190,73 @@ class _DrPatientsState extends State<DrPatients> {
                               ),
                             )
                           : ListView.builder(
-                              reverse: true,
+                          physics: const BouncingScrollPhysics(),
+                          reverse: true,
                               shrinkWrap: true,
                               itemCount: snapshot.data!.docs.length,
                               itemBuilder: (context, index) {
-                                return InkWell(
-                                    onTap: () {},
-                                    child: Padding(
+                                return Padding(
+                                    padding: const EdgeInsets.all(16.0),
+                                    child: Card(
+                                      color: Color.fromRGBO(22, 75, 96,1),
+                                      elevation: 10,
+                                      child: Padding(
                                         padding: const EdgeInsets.all(16.0),
-                                        child: Card(
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(16.0),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment
+                                                  .spaceBetween,
+                                          children: [
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
                                               children: [
-                                                Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              right: 8.0),
-                                                      child: Text(
-                                                        snapshot.data!
-                                                                .docs[index]
-                                                            ['name'],
-                                                        style: const TextStyle(
-                                                          fontSize: 20.0,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                        ),
-                                                      ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          right: 8.0),
+                                                  child: Text(
+                                                    snapshot.data!
+                                                            .docs[index]
+                                                        ['name'],
+                                                    style: GoogleFonts.lato(
+                                                      color: Colors.white,
+                                                      fontSize: 20.0,
+                                                      fontWeight:
+                                                          FontWeight.bold,
                                                     ),
-                                                    Text(
-                                                      snapshot.data!.docs[index]
-                                                          ['email'],
-                                                      style: TextStyle(
-                                                        fontSize: 16.0,
-                                                        color: Colors.grey[600],
-                                                      ),
-                                                    ),
-                                                  ],
+                                                  ),
                                                 ),
-                                                Column(
-                                                  children: [
-                                                    IconButton(
-                                                        onPressed: () {
-                                                          Provider.of<MyProvider>(
-                                                                  context,
-                                                                  listen: false)
-                                                              .startChattingWithPatient(
-                                                                  snapshot,
-                                                                  index,
-                                                                  context);
-                                                        },
-                                                        icon: const Icon(
-                                                            Icons.chat))
-                                                  ],
+                                                Text(
+                                                  snapshot.data!.docs[index]
+                                                      ['email'],
+                                                  style: GoogleFonts.lato(
+                                                    fontSize: 16.0,
+                                                    color: Colors.grey[500],
+                                                  ),
                                                 ),
                                               ],
                                             ),
-                                          ),
-                                        )));
+                                            Column(
+                                              children: [
+                                                IconButton(
+                                                    onPressed: () {
+                                                      Provider.of<MyProvider>(
+                                                              context,
+                                                              listen: false)
+                                                          .startChattingWithPatient(
+                                                              snapshot,
+                                                              index,
+                                                              context);
+                                                    },
+                                                    icon: const Icon(
+                                                        Icons.chat,color: Colors.white,))
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ));
                               });
                     },
                   )

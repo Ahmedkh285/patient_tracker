@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
@@ -41,15 +42,14 @@ class _MessagesComposeState extends State<MessagesComposeDoctor> with WidgetsBin
   Widget build(BuildContext context) {
     return Row(
       children: [
-
         SizedBox(
             width: MediaQuery.of(context).size.width - 55,
             child: Card(
-              color: Colors.blueAccent,
+              color: const Color.fromRGBO(22, 75, 96,1),
               margin: const EdgeInsets.only(
-                  left: 5, right: 5, bottom: 8),
+                  left: 6, right: 6, bottom: 8),
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(25)),
+                  borderRadius: BorderRadius.circular(15)),
               child: TextField(
                   style: const TextStyle(color: Colors.white,),
                   controller: _textController,
@@ -72,8 +72,8 @@ class _MessagesComposeState extends State<MessagesComposeDoctor> with WidgetsBin
                   },
                   decoration: InputDecoration(
                     border: InputBorder.none,
-                    hintText: "Type your message",
-                    hintStyle: const TextStyle(color: Colors.white,),
+                    hintText: "   Type your message...",
+                    hintStyle:  GoogleFonts.lato(color: Colors.white,),
                     suffixIcon: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -91,60 +91,66 @@ class _MessagesComposeState extends State<MessagesComposeDoctor> with WidgetsBin
                               }
 
                             },
-                            icon: const Icon(Icons.camera,color: Colors.white,)
+                            icon: const Icon(Icons.camera_alt,color: Colors.white,)
                         )
                       ],
                     ),
                     contentPadding: const EdgeInsets.all(5),
                   )),
             )),
+        Container(),
         Padding(
           padding:
           const EdgeInsets.only(bottom: 8.0, right: 2),
           child: CircleAvatar(
             radius: 25,
-            backgroundColor: Colors.blueAccent,
-            child:IconButton(
-                onPressed: () async {
-                  if (sendChatButton) {
-                    //txt message
-                    FireBaseHelper().sendMessage(
-                        chatId : Provider.of<MyProvider>(context,listen: false).getChatId(context),
-                        senderId : Provider.of<MyProvider>(context,listen: false).auth.currentUser!.uid,
-                        receiverId : Provider.of<MyProvider>(context,listen: false).peerUserData!["userId"],
-                        msgTime : FieldValue.serverTimestamp(),
-                        msgType : "text",
-                        message : _textController.text.toString(),
-                        fileName: ""
-                    );
+            backgroundColor: const Color.fromRGBO(22, 75, 96,1),
+            child:Center(
+              child: IconButton(
+                  onPressed: () async {
+                    if (sendChatButton) {
+                      //txt message
+                      FireBaseHelper().sendMessage(
+                          chatId : Provider.of<MyProvider>(context,listen: false).getChatId(context),
+                          senderId : Provider.of<MyProvider>(context,listen: false).auth.currentUser!.uid,
+                          receiverId : Provider.of<MyProvider>(context,listen: false).peerUserData!["userId"],
+                          msgTime : FieldValue.serverTimestamp(),
+                          msgType : "text",
+                          message : _textController.text.toString(),
+                          fileName: ""
+                      );
 
-                    FireBaseHelper().updateLastMessage(
-                        chatId : Provider.of<MyProvider>(context,listen: false).getChatId(context),
-                        senderId : Provider.of<MyProvider>(context,listen: false).auth.currentUser!.uid,
-                        receiverId : Provider.of<MyProvider>(context,listen: false).peerUserData!["userId"],
-                        receiverUsername : Provider.of<MyProvider>(context,listen: false).peerUserData!["name"],
-                        msgTime : FieldValue.serverTimestamp(),
-                        msgType : "text",
-                        message : _textController.text.toString(),
-                        context: context
-                    );
-                    // notifyUser(Provider.of<MyProvider>(context,listen: false).auth.currentUser!.displayName,
-                    //     _textController.text.toString(),
-                    //     Provider.of<MyProvider>(context,listen: false).peerUserData!["email"],
-                    //     Provider.of<MyProvider>(context,listen: false).auth.currentUser!.email);
-                    _textController.clear();
-                    setState(() {
-                      sendChatButton = false;
-                    });
-                    FireBaseHelper().updatePatientStatus("Online",Provider.of<MyProvider>(context,listen: false).auth.currentUser!.uid);
+                      FireBaseHelper().updateLastMessage(
+                          chatId : Provider.of<MyProvider>(context,listen: false).getChatId(context),
+                          senderId : Provider.of<MyProvider>(context,listen: false).auth.currentUser!.uid,
+                          receiverId : Provider.of<MyProvider>(context,listen: false).peerUserData!["userId"],
+                          receiverUsername : Provider.of<MyProvider>(context,listen: false).peerUserData!["name"],
+                          msgTime : FieldValue.serverTimestamp(),
+                          msgType : "text",
+                          message : _textController.text.toString(),
+                          context: context
+                      );
+                      // notifyUser(Provider.of<MyProvider>(context,listen: false).auth.currentUser!.displayName,
+                      //     _textController.text.toString(),
+                      //     Provider.of<MyProvider>(context,listen: false).peerUserData!["email"],
+                      //     Provider.of<MyProvider>(context,listen: false).auth.currentUser!.email);
+                      _textController.clear();
+                      setState(() {
+                        sendChatButton = false;
+                      });
+                      FireBaseHelper().updatePatientStatus("Online",Provider.of<MyProvider>(context,listen: false).auth.currentUser!.uid);
 
-                  }
+                    }
 
-                },
-                icon: Icon(
-                   Icons.send,
-                  color: Colors.white,
-                )),
+                  },
+                  icon: const Center(
+                    child: Icon(
+                       Icons.send,
+                      color: Colors.white,
+                      size: 25,
+                    ),
+                  )),
+            ),
 
 
           ),

@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+
+import '../provider/my_provider.dart';
 
 class DrProfile extends StatefulWidget {
   DrProfile({Key? key}) : super(key: key);
@@ -12,216 +16,244 @@ class _DrProfileState extends State<DrProfile> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      constraints: BoxConstraints.expand(),
-      decoration: BoxDecoration(
-        image: DecorationImage(
-            image: AssetImage('assets/images/4907157.jpg'), fit: BoxFit.cover),
-      ),
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-        ),
-        drawer: Drawer(
-          backgroundColor: Colors.white,
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: [
-              const DrawerHeader(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    fit: BoxFit.fill,
-                    image: AssetImage('assets/images/black.jpg'),
-                  ),
-                  color: Colors.white,
-                ),
-                child: Text(''),
-              ),
-              ListTile(
-                title: const Text('My Profile'),
-                onTap: () {
-                  Navigator.pushNamed(context, 'dr_profile');
-                },
-              ),
-              ListTile(
-                title: const Text('My Patients'),
-                onTap: () {
-                  Navigator.pushNamed(context, 'dr_patients');
-                },
-              ),
-              ListTile(
-                title: const Text('Sign out'),
-                onTap: () {
-                  Navigator.pushNamed(context, 'start');
-                },
-              ),
-            ],
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(
+            Icons.keyboard_arrow_left,
+            size: 30,
           ),
         ),
+        iconTheme: const IconThemeData(
+          color: Color.fromRGBO(22, 75, 96, 1),
+        ),
         backgroundColor: Colors.transparent,
-        body: Stack(
+        elevation: 0,
+        title: Text(
+          'Profile',
+          style: GoogleFonts.lato(
+              color: const Color.fromRGBO(22, 75, 96, 1),
+              fontWeight: FontWeight.bold),
+        ),
+      ),
+      backgroundColor: Colors.white,
+      body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: Column(
           children: [
-            Container(
-              width: 200,
-              height: 200,
-              child: CircleAvatar(
-                backgroundColor: Colors.white,
-                //backgroundImage: AssetImage('assets/images/tota.JPG'),
-              ),
-              padding: EdgeInsets.only(left: 0, top: 30),
+            const SizedBox(
+              height: 60,
             ),
-            Container(
-              padding: EdgeInsets.only(left: 250, top: 120),
-              child: Text(
-                'Doctor\nName',
-                style: TextStyle(color: Colors.white, fontSize: 33),
-              ),
-            ),
-            Center(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  SizedBox(
-                    height: 300,
-                  ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.transparent,
-                      padding: const EdgeInsets.all(16.0),
+            Stack(
+              clipBehavior: Clip.none,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Material(
+                    elevation: 10,
+                    borderRadius: BorderRadius.circular(20),
+                    child: Container(
+                      height: 200,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        gradient: const LinearGradient(
+                          colors: [Color.fromRGBO(22, 75, 96, 1), Colors.black87],
+                        ),
+                      ),
                     ),
-                    onPressed: () {
+                  ),
+                ),
+                const Positioned(
+                    top: -60,
+                    left: 40,
+                    child: Image(image: AssetImage('assets/images/12.png'))),
+                Positioned(
+                  top: 140,
+                  left: 50,
+                  child: Text(
+                    'Dr:  ${Provider.of<MyProvider>(context,listen: false).auth.currentUser!.displayName}',
+                    style: GoogleFonts.lato(fontSize: 24,fontWeight: FontWeight.bold,color: Colors.white,),
+                  ),
+                ),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.all(20),
+              child: Row(
+                children: [
+                  InkWell(
+                    child: Material(
+                      elevation: 5,
+                      borderRadius: BorderRadius.circular(15),
+                      child: Container(
+                        height: 150,
+                        width: 150,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          gradient: const LinearGradient(
+                            colors: [Color.fromRGBO(22, 75, 96, 1), Colors.black87],
+                          ),
+
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(20),
+                          child: Column(
+                            children: [
+                              Text('My Patients',style: GoogleFonts.lato(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 18),),
+                              const SizedBox(height: 20,),
+                              const Icon(Icons.people,size: 60,color: Colors.white,)
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    onTap: (){
                       Navigator.pushNamed(context, 'dr_patients');
                     },
-                    child: Text(
-                      "                 My Patients                 ",
-                      style: TextStyle(
-                        decoration: TextDecoration.none,
-                        fontSize: 25,
-                        color: Colors.white,
+                  ),
+                  const Spacer(),
+                  InkWell(
+                    child: Material(
+                      elevation: 5,
+                      borderRadius: BorderRadius.circular(15),
+                      child: Container(
+                        height: 150,
+                        width: 150,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          gradient: const LinearGradient(
+                            colors: [Color.fromRGBO(22, 75, 96, 1), Colors.black87],
+                          ),
+
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(20),
+                          child: Column(
+                            children: [
+                              Text('Edit My Profile',style: GoogleFonts.lato(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 16),),
+                              const SizedBox(height: 25,),
+                              const Icon(Icons.edit,size: 60,color: Colors.white,)
+                            ],
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.transparent,
-                      padding: const EdgeInsets.all(16.0),
-                    ),
-                    onPressed: () {
+                    onTap: (){
                       Navigator.pushNamed(context, 'dr_profile');
                     },
-                    child: Text(
-                      "                 Edit my profile             ",
-                      style: TextStyle(
-                        decoration: TextDecoration.none,
-                        fontSize: 25,
-                        color: Colors.white,
-                      ),
-                    ),
                   ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.transparent,
-                      padding: const EdgeInsets.all(16.0),
-                    ),
-                    onPressed: () {
-                      Widget cancelButton = TextButton(
-                        child: Text("No"),
-                        onPressed: () {
-                          Navigator.of(context, rootNavigator: true).pop();
-                        },
-                      );
-                      Widget continueButton = TextButton(
-                        child: Text("Yes"),
-                        onPressed: () {
-                          Navigator.pushNamed(context, 'start');
-                        },
-                      );
 
-                      // set up the AlertDialog
-                      AlertDialog alert = AlertDialog(
-                        title: Text("Your account will be deleted"),
-                        content: Text(
-                            "Are you sure you want to delete your account?"),
-                        actions: [
-                          cancelButton,
-                          continueButton,
-                        ],
-                      );
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return alert;
-                        },
-                      );
-                    },
-                    child: Text(
-                      "            Delete my account          ",
-                      style: TextStyle(
-                        decoration: TextDecoration.none,
-                        fontSize: 25,
-                        color: Colors.red,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      CircleAvatar(
-                        backgroundColor: Colors.transparent,
-                        child: IconButton(
-                          //padding: EdgeInsets.only(top: 50),
-                          color: Colors.white,
-                          onPressed: () {
-                            Navigator.pushNamed(context, 'dr_chats');
-                          },
-                          icon: Icon(
-                            Icons.chat,
-                          ),
-                        ),
-                      ),
-                      CircleAvatar(
-                        backgroundColor: Colors.transparent,
-                        child: IconButton(
-                          //padding: EdgeInsets.only(top: 50),
-                          color: Colors.white,
-                          onPressed: () {
-                            Navigator.pushNamed(context, 'dr_home');
-                          },
-                          icon: Icon(
-                            Icons.home,
-                          ),
-                        ),
-                      ),
-                      CircleAvatar(
-                        backgroundColor: Colors.transparent,
-                        child: IconButton(
-                          //padding: EdgeInsets.only(top: 50),
-                          color: Colors.white,
-                          onPressed: () {
-                            Navigator.pushNamed(context, 'dr_profile');
-                          },
-                          icon: Icon(
-                            Icons.account_box,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
                 ],
               ),
             ),
+            const SizedBox(height: 10,),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Container(
+                height: 60,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  gradient: const LinearGradient(
+                    colors: [Color.fromRGBO(22, 75, 96,1),Colors.black87],
+                  ),
+
+                ),
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left:20),
+                      child: Text('Delete My Account',style: GoogleFonts.lato(fontWeight: FontWeight.bold,color: Colors.white,fontSize: 20),),
+                    ),
+                    const Spacer(),
+                    IconButton(
+                        onPressed: (){
+                          Widget cancelButton = TextButton(
+                            child: const Text("No"),
+                            onPressed: () {
+                              Navigator.of(context, rootNavigator: true).pop();
+                            },
+                          );
+                          Widget continueButton = TextButton(
+                            child: const Text("Yes"),
+                            onPressed: () {
+                              Navigator.pushNamed(context, 'start');
+                            },
+                          );
+
+                          // set up the AlertDialog
+                          AlertDialog alert = AlertDialog(
+                            title: const Text("Your account will be deleted"),
+                            content: const Text(
+                                "Are you sure you want to delete your account?"),
+                            actions: [
+                              cancelButton,
+                              continueButton,
+                            ],
+                          );
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return alert;
+                            },
+                          );
+                        },
+                        icon: const Icon(Icons.delete,color: Colors.red,size: 30,))
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 20,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                CircleAvatar(
+                  backgroundColor: Colors.transparent,
+                  child: IconButton(
+                    //padding: EdgeInsets.only(top: 50),
+                    color: const Color.fromRGBO(22, 75, 96,1),
+                    onPressed: () {
+                      Navigator.pushNamed(context, 'dr_chats');
+                    },
+                    icon: const Icon(
+                      Icons.chat,
+                      size: 30,
+                    ),
+                  ),
+                ),
+                CircleAvatar(
+                  backgroundColor: Colors.transparent,
+                  child: IconButton(
+                    //padding: EdgeInsets.only(top: 50),
+                    color: const Color.fromRGBO(22, 75, 96,1),                              onPressed: () {
+                    Navigator.pushNamed(context, 'dr_home');
+                  },
+                    icon: const Icon(
+                      Icons.home,
+                      size: 30,
+                    ),
+                  ),
+                ),
+                CircleAvatar(
+                  backgroundColor: Colors.transparent,
+                  child: IconButton(
+                    //padding: EdgeInsets.only(top: 50),
+                    color: const Color.fromRGBO(22, 75, 96,1),                              onPressed: () {
+                    Navigator.pushNamed(context, 'dr_profile');
+                  },
+                    icon: const Icon(
+                      Icons.account_box,
+                      size: 30,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+
           ],
         ),
       ),
